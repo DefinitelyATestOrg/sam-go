@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package samgo_test
+package sam_test
 
 import (
 	"context"
@@ -20,15 +20,15 @@ func TestUsage(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := samgo.NewClient(
+	client := sam.NewClient(
 		option.WithBaseURL(baseURL),
 	)
 	customerAccountGetResponse, err := client.Customers.Accounts.Get(
 		context.TODO(),
 		"REPLACE_ME",
 		"REPLACE_ME",
-		samgo.CustomerAccountGetParams{
-			UserID: samgo.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
+		sam.CustomerAccountGetParams{
+			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 		},
 	)
 	if err != nil {

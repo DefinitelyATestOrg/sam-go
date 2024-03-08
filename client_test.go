@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package samgo_test
+package sam_test
 
 import (
 	"context"
@@ -22,7 +22,7 @@ func (t *closureTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 
 func TestRetryAfter(t *testing.T) {
 	attempts := 0
-	client := samgo.NewClient(
+	client := sam.NewClient(
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -41,8 +41,8 @@ func TestRetryAfter(t *testing.T) {
 		context.Background(),
 		"REPLACE_ME",
 		"REPLACE_ME",
-		samgo.CustomerAccountGetParams{
-			UserID: samgo.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
+		sam.CustomerAccountGetParams{
+			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 		},
 	)
 	if err == nil || res != nil {
@@ -55,7 +55,7 @@ func TestRetryAfter(t *testing.T) {
 
 func TestRetryAfterMs(t *testing.T) {
 	attempts := 0
-	client := samgo.NewClient(
+	client := sam.NewClient(
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -74,8 +74,8 @@ func TestRetryAfterMs(t *testing.T) {
 		context.Background(),
 		"REPLACE_ME",
 		"REPLACE_ME",
-		samgo.CustomerAccountGetParams{
-			UserID: samgo.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
+		sam.CustomerAccountGetParams{
+			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 		},
 	)
 	if err == nil || res != nil {
@@ -87,7 +87,7 @@ func TestRetryAfterMs(t *testing.T) {
 }
 
 func TestContextCancel(t *testing.T) {
-	client := samgo.NewClient(
+	client := sam.NewClient(
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -103,8 +103,8 @@ func TestContextCancel(t *testing.T) {
 		cancelCtx,
 		"REPLACE_ME",
 		"REPLACE_ME",
-		samgo.CustomerAccountGetParams{
-			UserID: samgo.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
+		sam.CustomerAccountGetParams{
+			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 		},
 	)
 	if err == nil || res != nil {
@@ -113,7 +113,7 @@ func TestContextCancel(t *testing.T) {
 }
 
 func TestContextCancelDelay(t *testing.T) {
-	client := samgo.NewClient(
+	client := sam.NewClient(
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -129,8 +129,8 @@ func TestContextCancelDelay(t *testing.T) {
 		cancelCtx,
 		"REPLACE_ME",
 		"REPLACE_ME",
-		samgo.CustomerAccountGetParams{
-			UserID: samgo.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
+		sam.CustomerAccountGetParams{
+			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 		},
 	)
 	if err == nil || res != nil {
@@ -147,7 +147,7 @@ func TestContextDeadline(t *testing.T) {
 	defer cancel()
 
 	go func() {
-		client := samgo.NewClient(
+		client := sam.NewClient(
 			option.WithHTTPClient(&http.Client{
 				Transport: &closureTransport{
 					fn: func(req *http.Request) (*http.Response, error) {
@@ -161,8 +161,8 @@ func TestContextDeadline(t *testing.T) {
 			deadlineCtx,
 			"REPLACE_ME",
 			"REPLACE_ME",
-			samgo.CustomerAccountGetParams{
-				UserID: samgo.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
+			sam.CustomerAccountGetParams{
+				UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 			},
 		)
 		if err == nil || res != nil {
