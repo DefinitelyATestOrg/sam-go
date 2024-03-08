@@ -7,17 +7,25 @@ API](https://docs.elborai.software) from applications written in Go. The full AP
 
 ## Installation
 
+<!-- x-release-please-start-version -->
+
 ```go
 import (
-	"github.com/DefinitelyATestOrg/sam-go" // imported as sam
+	"github.com/DefinitelyATestOrg/sam-go" // imported as samgo
 )
 ```
 
+<!-- x-release-please-end -->
+
 Or to pin the version:
+
+<!-- x-release-please-start-version -->
 
 ```sh
 go get -u 'github.com/DefinitelyATestOrg/sam-go@v0.0.1'
 ```
+
+<!-- x-release-please-end -->
 
 ## Requirements
 
@@ -38,13 +46,13 @@ import (
 )
 
 func main() {
-	client := sam.NewClient()
+	client := samgo.NewClient()
 	customerAccountGetResponse, err := client.Customers.Accounts.Get(
 		context.TODO(),
 		"REPLACE_ME",
 		"REPLACE_ME",
-		sam.CustomerAccountGetParams{
-			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
+		samgo.CustomerAccountGetParams{
+			UserID: samgo.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 		},
 	)
 	if err != nil {
@@ -69,18 +77,18 @@ To send a null, use `Null[T]()`, and to send a nonconforming value, use `Raw[T](
 
 ```go
 params := FooParams{
-	Name: sam.F("hello"),
+	Name: samgo.F("hello"),
 
 	// Explicitly send `"description": null`
-	Description: sam.Null[string](),
+	Description: samgo.Null[string](),
 
-	Point: sam.F(sam.Point{
-		X: sam.Int(0),
-		Y: sam.Int(1),
+	Point: samgo.F(samgo.Point{
+		X: samgo.Int(0),
+		Y: samgo.Int(1),
 
 		// In cases where the API specifies a given type,
 		// but you want to send something else, use `Raw`:
-		Z: sam.Raw[int64](0.01), // sends a float
+		Z: samgo.Raw[int64](0.01), // sends a float
 	}),
 }
 ```
@@ -134,7 +142,7 @@ This library uses the functional options pattern. Functions defined in the
 requests. For example:
 
 ```go
-client := sam.NewClient(
+client := samgo.NewClient(
 	// Adds a header to every request made by the client
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
@@ -169,7 +177,7 @@ with additional helper methods like `.GetNextPage()`, e.g.:
 ### Errors
 
 When the API returns a non-success status code, we return an error with type
-`*sam.Error`. This contains the `StatusCode`, `*http.Request`, and
+`*samgo.Error`. This contains the `StatusCode`, `*http.Request`, and
 `*http.Response` values of the request, as well as the JSON of the error body
 (much like other response objects in the SDK).
 
@@ -180,12 +188,12 @@ _, err := client.Customers.Accounts.Get(
 	context.TODO(),
 	"REPLACE_ME",
 	"REPLACE_ME",
-	sam.CustomerAccountGetParams{
-		UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
+	samgo.CustomerAccountGetParams{
+		UserID: samgo.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 	},
 )
 if err != nil {
-	var apierr *sam.Error
+	var apierr *samgo.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
@@ -212,8 +220,8 @@ client.Customers.Accounts.Get(
 	ctx,
 	"REPLACE_ME",
 	"REPLACE_ME",
-	sam.CustomerAccountGetParams{
-		UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
+	samgo.CustomerAccountGetParams{
+		UserID: samgo.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -230,7 +238,7 @@ You can use the `WithMaxRetries` option to configure or disable this:
 
 ```go
 // Configure the default for all requests:
-client := sam.NewClient(
+client := samgo.NewClient(
 	option.WithMaxRetries(0), // default is 2
 )
 
@@ -239,8 +247,8 @@ client.Customers.Accounts.Get(
 	context.TODO(),
 	"REPLACE_ME",
 	"REPLACE_ME",
-	sam.CustomerAccountGetParams{
-		UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
+	samgo.CustomerAccountGetParams{
+		UserID: samgo.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 	},
 	option.WithMaxRetries(5),
 )
@@ -267,7 +275,7 @@ func Logger(req *http.Request, next option.MiddlewareNext) (res *http.Response, 
     return res, err
 }
 
-client := sam.NewClient(
+client := samgo.NewClient(
 	option.WithMiddleware(Logger),
 )
 ```

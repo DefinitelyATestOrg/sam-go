@@ -1,4 +1,4 @@
-package sam
+package samgo
 
 import (
 	"github.com/DefinitelyATestOrg/sam-go/internal/param"
