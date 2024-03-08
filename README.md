@@ -187,7 +187,7 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 _, err := client.Customers.Accounts.Get(
 	context.TODO(),
 	"REPLACE_ME",
-	"REPLACE_ME",
+	"REPLACE_",
 	sam.CustomerAccountGetParams{
 		UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 	},
@@ -219,7 +219,7 @@ defer cancel()
 client.Customers.Accounts.Get(
 	ctx,
 	"REPLACE_ME",
-	"REPLACE_ME",
+	"REPLACE_",
 	sam.CustomerAccountGetParams{
 		UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 	},
@@ -246,7 +246,7 @@ client := sam.NewClient(
 client.Customers.Accounts.Get(
 	context.TODO(),
 	"REPLACE_ME",
-	"REPLACE_ME",
+	"REPLACE_",
 	sam.CustomerAccountGetParams{
 		UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 	},
