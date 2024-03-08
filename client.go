@@ -3,7 +3,7 @@
 package sam
 
 import (
-	"github.com/DefinitelyATestOrg/sam-go/v2/option"
+	"github.com/DefinitelyATestOrg/sam-go/v3/option"
 )
 
 // Client creates a struct with services and top level methods that help with

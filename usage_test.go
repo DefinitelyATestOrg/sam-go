@@ -7,9 +7,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/DefinitelyATestOrg/sam-go/v2"
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal/testutil"
-	"github.com/DefinitelyATestOrg/sam-go/v2/option"
+	"github.com/DefinitelyATestOrg/sam-go/v3"
+	"github.com/DefinitelyATestOrg/sam-go/v3/internal/testutil"
+	"github.com/DefinitelyATestOrg/sam-go/v3/option"
 )
 
 func TestUsage(t *testing.T) {

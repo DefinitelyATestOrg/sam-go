@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal/requestconfig"
+	"github.com/DefinitelyATestOrg/sam-go/v3/internal/requestconfig"
 	"github.com/tidwall/sjson"
 )
 
@@ -16,7 +16,7 @@ import (
 // which can be supplied to clients, services, and methods. You can read more about this functional
 // options pattern in our [README].
 //
-// [README]: https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2#readme-requestoptions
+// [README]: https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3#readme-requestoptions
 type RequestOption = func(*requestconfig.RequestConfig) error
 
 // WithBaseURL returns a RequestOption that sets the BaseURL for the client.

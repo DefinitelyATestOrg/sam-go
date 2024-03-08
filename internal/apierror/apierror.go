@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apijson"
+	"github.com/DefinitelyATestOrg/sam-go/v3/internal/apijson"
 )
 
 // Error represents an error that originates from the API, i.e. when a request is
