@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package sam_test
+package samgo_test
 
 import (
 	"context"
@@ -21,19 +21,19 @@ func TestCustomerAccountGet(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := sam.NewClient(
+	client := samgo.NewClient(
 		option.WithBaseURL(baseURL),
 	)
 	_, err := client.Customers.Accounts.Get(
 		context.TODO(),
 		"6878951b-256b-4baa-9e81-ad4c577adc4e",
 		"3dc3d5b3-7023-4848-9853-f5400a64e80f",
-		sam.CustomerAccountGetParams{
-			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
+		samgo.CustomerAccountGetParams{
+			UserID: samgo.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 		},
 	)
 	if err != nil {
-		var apierr *sam.Error
+		var apierr *samgo.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}
@@ -49,20 +49,20 @@ func TestCustomerAccountListWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := sam.NewClient(
+	client := samgo.NewClient(
 		option.WithBaseURL(baseURL),
 	)
 	_, err := client.Customers.Accounts.List(
 		context.TODO(),
 		"6878951b-256b-4baa-9e81-ad4c577adc4e",
-		sam.CustomerAccountListParams{
-			UserID:          sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
-			CashAccountType: sam.F([]sam.CustomerAccountListParamsCashAccountType{sam.CustomerAccountListParamsCashAccountTypeCacc, sam.CustomerAccountListParamsCashAccountTypeCard, sam.CustomerAccountListParamsCashAccountTypeCash}),
-			Status:          sam.F([]sam.CustomerAccountListParamsStatus{sam.CustomerAccountListParamsStatusEnabled, sam.CustomerAccountListParamsStatusDeleted, sam.CustomerAccountListParamsStatusBlocked}),
+		samgo.CustomerAccountListParams{
+			UserID:          samgo.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
+			CashAccountType: samgo.F([]samgo.CustomerAccountListParamsCashAccountType{samgo.CustomerAccountListParamsCashAccountTypeCacc, samgo.CustomerAccountListParamsCashAccountTypeCard, samgo.CustomerAccountListParamsCashAccountTypeCash}),
+			Status:          samgo.F([]samgo.CustomerAccountListParamsStatus{samgo.CustomerAccountListParamsStatusEnabled, samgo.CustomerAccountListParamsStatusDeleted, samgo.CustomerAccountListParamsStatusBlocked}),
 		},
 	)
 	if err != nil {
-		var apierr *sam.Error
+		var apierr *samgo.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}
@@ -78,19 +78,19 @@ func TestCustomerAccountCloseWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := sam.NewClient(
+	client := samgo.NewClient(
 		option.WithBaseURL(baseURL),
 	)
 	err := client.Customers.Accounts.Close(
 		context.TODO(),
 		"6878951b-256b-4baa-9e81-ad4c577adc4e",
 		"3dc3d5b3-7023-4848-9853-f5400a64e80f",
-		sam.CustomerAccountCloseParams{
-			IdempotencyKey: sam.F("2318951c-356e-3bcd-9e94-ad4c593adc4f"),
+		samgo.CustomerAccountCloseParams{
+			IdempotencyKey: samgo.F("2318951c-356e-3bcd-9e94-ad4c593adc4f"),
 		},
 	)
 	if err != nil {
-		var apierr *sam.Error
+		var apierr *samgo.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}
