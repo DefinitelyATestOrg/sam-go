@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package samgo
+package sam
 
 import (
 	"context"
