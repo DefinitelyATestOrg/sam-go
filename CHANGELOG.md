@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.0-beta.0 (2024-03-08)
+
+Full Changelog: [v0.1.0...v2.0.0-beta.0](https://github.com/DefinitelyATestOrg/sam-go/compare/v0.1.0...v2.0.0-beta.0)
+
+### Features
+
+* update via SDK Studio ([#3](https://github.com/DefinitelyATestOrg/sam-go/issues/3)) ([f0ae1ca](https://github.com/DefinitelyATestOrg/sam-go/commit/f0ae1caa3d79ceebc140b9b0eb62fb14b1b6b5ea))
+* update via SDK Studio ([#5](https://github.com/DefinitelyATestOrg/sam-go/issues/5)) ([5613903](https://github.com/DefinitelyATestOrg/sam-go/commit/5613903badd9a00d6a312208775fdfc4a637e5fb))
+
 ## 0.1.0 (2024-03-08)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/DefinitelyATestOrg/sam-go/compare/v0.0.1...v0.1.0)
