@@ -1,6 +1,6 @@
 # Sam Go API Library
 
-<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go"><img src="https://pkg.go.dev/badge/github.com/DefinitelyATestOrg/sam-go.svg" alt="Go Reference"></a>
+<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2"><img src="https://pkg.go.dev/badge/github.com/DefinitelyATestOrg/sam-go/v2.svg" alt="Go Reference"></a>
 
 The Sam Go library provides convenient access to [the Sam REST
 API](https://docs.elborai.software) from applications written in Go. The full API of this library can be found in [api.md](api.md).
@@ -11,7 +11,7 @@ API](https://docs.elborai.software) from applications written in Go. The full AP
 
 ```go
 import (
-	"github.com/DefinitelyATestOrg/sam-go" // imported as sam
+	"github.com/DefinitelyATestOrg/sam-go/v2" // imported as sam
 )
 ```
 
@@ -22,7 +22,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/DefinitelyATestOrg/sam-go@v2.0.0-beta.0'
+go get -u 'github.com/DefinitelyATestOrg/sam-go/v2@v2.0.0-beta.0'
 ```
 
 <!-- x-release-please-end -->
@@ -42,7 +42,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/DefinitelyATestOrg/sam-go"
+	"github.com/DefinitelyATestOrg/sam-go/v2"
 )
 
 func main() {
@@ -155,7 +155,7 @@ client.Customers.Accounts.Get(context.TODO(), ...,
 )
 ```
 
-See the [full list of request options](https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/option).
+See the [full list of request options](https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2/option).
 
 ### Pagination
 
@@ -187,7 +187,7 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 _, err := client.Customers.Accounts.Get(
 	context.TODO(),
 	"REPLACE_ME",
-	"REPLACE_",
+	"REPLACE_ME",
 	sam.CustomerAccountGetParams{
 		UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 	},
@@ -219,7 +219,7 @@ defer cancel()
 client.Customers.Accounts.Get(
 	ctx,
 	"REPLACE_ME",
-	"REPLACE_",
+	"REPLACE_ME",
 	sam.CustomerAccountGetParams{
 		UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 	},
@@ -246,7 +246,7 @@ client := sam.NewClient(
 client.Customers.Accounts.Get(
 	context.TODO(),
 	"REPLACE_ME",
-	"REPLACE_",
+	"REPLACE_ME",
 	sam.CustomerAccountGetParams{
 		UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 	},

@@ -1,4 +1,4 @@
-module github.com/DefinitelyATestOrg/sam-go
+module github.com/DefinitelyATestOrg/sam-go/v2
 
 go 1.19
 

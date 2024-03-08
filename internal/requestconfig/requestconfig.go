@@ -17,10 +17,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/DefinitelyATestOrg/sam-go/internal"
-	"github.com/DefinitelyATestOrg/sam-go/internal/apierror"
-	"github.com/DefinitelyATestOrg/sam-go/internal/apiform"
-	"github.com/DefinitelyATestOrg/sam-go/internal/apiquery"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apierror"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apiform"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apiquery"
 )
 
 func getNormalizedOS() string {

@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/DefinitelyATestOrg/sam-go"
-	"github.com/DefinitelyATestOrg/sam-go/option"
+	"github.com/DefinitelyATestOrg/sam-go/v2"
+	"github.com/DefinitelyATestOrg/sam-go/v2/option"
 )
 
 type closureTransport struct {
@@ -40,7 +40,7 @@ func TestRetryAfter(t *testing.T) {
 	res, err := client.Customers.Accounts.Get(
 		context.Background(),
 		"REPLACE_ME",
-		"REPLACE_",
+		"REPLACE_ME",
 		sam.CustomerAccountGetParams{
 			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 		},
@@ -73,7 +73,7 @@ func TestRetryAfterMs(t *testing.T) {
 	res, err := client.Customers.Accounts.Get(
 		context.Background(),
 		"REPLACE_ME",
-		"REPLACE_",
+		"REPLACE_ME",
 		sam.CustomerAccountGetParams{
 			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 		},
@@ -102,7 +102,7 @@ func TestContextCancel(t *testing.T) {
 	res, err := client.Customers.Accounts.Get(
 		cancelCtx,
 		"REPLACE_ME",
-		"REPLACE_",
+		"REPLACE_ME",
 		sam.CustomerAccountGetParams{
 			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 		},
@@ -128,7 +128,7 @@ func TestContextCancelDelay(t *testing.T) {
 	res, err := client.Customers.Accounts.Get(
 		cancelCtx,
 		"REPLACE_ME",
-		"REPLACE_",
+		"REPLACE_ME",
 		sam.CustomerAccountGetParams{
 			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 		},
@@ -160,7 +160,7 @@ func TestContextDeadline(t *testing.T) {
 		res, err := client.Customers.Accounts.Get(
 			deadlineCtx,
 			"REPLACE_ME",
-			"REPLACE_",
+			"REPLACE_ME",
 			sam.CustomerAccountGetParams{
 				UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
 			},
