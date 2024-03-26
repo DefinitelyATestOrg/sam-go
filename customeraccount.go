@@ -1,4 +1,4 @@
-// File generated from our OpenAPI spec by Stainless.
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 package sam
 
@@ -38,7 +38,7 @@ func NewCustomerAccountService(opts ...option.RequestOption) (r *CustomerAccount
 func (r *CustomerAccountService) Get(ctx context.Context, customerID string, accountID string, query CustomerAccountGetParams, opts ...option.RequestOption) (res *CustomerAccountGetResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := fmt.Sprintf("v1/customers/%s/accounts/%s", customerID, accountID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
@@ -56,7 +56,7 @@ func (r *CustomerAccountService) Close(ctx context.Context, customerID string, a
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "")}, opts...)
 	path := fmt.Sprintf("v1/customers/%s/accounts/%s/close", customerID, accountID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, nil, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, nil, opts...)
 	return
 }
 
@@ -174,6 +174,14 @@ const (
 	CustomerAccountGetResponseAccountStatusBlocked CustomerAccountGetResponseAccountStatus = "blocked"
 )
 
+func (r CustomerAccountGetResponseAccountStatus) IsKnown() bool {
+	switch r {
+	case CustomerAccountGetResponseAccountStatusEnabled, CustomerAccountGetResponseAccountStatusDeleted, CustomerAccountGetResponseAccountStatusBlocked:
+		return true
+	}
+	return false
+}
+
 // A single balance element.
 type CustomerAccountGetResponseAccountBalance struct {
 	BalanceAmount CustomerAccountGetResponseAccountBalancesBalanceAmount `json:"balanceAmount,required"`
@@ -284,6 +292,14 @@ const (
 	CustomerAccountGetResponseAccountBalancesBalanceTypeInterimBooked    CustomerAccountGetResponseAccountBalancesBalanceType = "interimBooked"
 )
 
+func (r CustomerAccountGetResponseAccountBalancesBalanceType) IsKnown() bool {
+	switch r {
+	case CustomerAccountGetResponseAccountBalancesBalanceTypeClosingBooked, CustomerAccountGetResponseAccountBalancesBalanceTypeOpeningBooked, CustomerAccountGetResponseAccountBalancesBalanceTypeInterimAvailable, CustomerAccountGetResponseAccountBalancesBalanceTypeInterimBooked:
+		return true
+	}
+	return false
+}
+
 // ExternalCashAccountType1Code from ISO 20022.
 type CustomerAccountGetResponseAccountCashAccountType string
 
@@ -312,6 +328,14 @@ const (
 	CustomerAccountGetResponseAccountCashAccountTypeVacc CustomerAccountGetResponseAccountCashAccountType = "VACC"
 	CustomerAccountGetResponseAccountCashAccountTypeNfca CustomerAccountGetResponseAccountCashAccountType = "NFCA"
 )
+
+func (r CustomerAccountGetResponseAccountCashAccountType) IsKnown() bool {
+	switch r {
+	case CustomerAccountGetResponseAccountCashAccountTypeCacc, CustomerAccountGetResponseAccountCashAccountTypeCard, CustomerAccountGetResponseAccountCashAccountTypeCash, CustomerAccountGetResponseAccountCashAccountTypeChar, CustomerAccountGetResponseAccountCashAccountTypeCish, CustomerAccountGetResponseAccountCashAccountTypeComm, CustomerAccountGetResponseAccountCashAccountTypeCpac, CustomerAccountGetResponseAccountCashAccountTypeLlsv, CustomerAccountGetResponseAccountCashAccountTypeLoan, CustomerAccountGetResponseAccountCashAccountTypeMgld, CustomerAccountGetResponseAccountCashAccountTypeMoma, CustomerAccountGetResponseAccountCashAccountTypeNrex, CustomerAccountGetResponseAccountCashAccountTypeOdft, CustomerAccountGetResponseAccountCashAccountTypeOndp, CustomerAccountGetResponseAccountCashAccountTypeOthr, CustomerAccountGetResponseAccountCashAccountTypeSacc, CustomerAccountGetResponseAccountCashAccountTypeSlry, CustomerAccountGetResponseAccountCashAccountTypeSvgs, CustomerAccountGetResponseAccountCashAccountTypeTaxe, CustomerAccountGetResponseAccountCashAccountTypeTran, CustomerAccountGetResponseAccountCashAccountTypeTras, CustomerAccountGetResponseAccountCashAccountTypeVacc, CustomerAccountGetResponseAccountCashAccountTypeNfca:
+		return true
+	}
+	return false
+}
 
 // Identifies a Person that acts as an account owner
 type CustomerAccountGetResponseAccountOwnerName struct {
@@ -353,6 +377,14 @@ const (
 	CustomerAccountGetResponseAccountUsagePriv CustomerAccountGetResponseAccountUsage = "PRIV"
 	CustomerAccountGetResponseAccountUsageOrga CustomerAccountGetResponseAccountUsage = "ORGA"
 )
+
+func (r CustomerAccountGetResponseAccountUsage) IsKnown() bool {
+	switch r {
+	case CustomerAccountGetResponseAccountUsagePriv, CustomerAccountGetResponseAccountUsageOrga:
+		return true
+	}
+	return false
+}
 
 type CustomerAccountListResponse struct {
 	Accounts []CustomerAccountListResponseAccount `json:"accounts"`
@@ -468,6 +500,14 @@ const (
 	CustomerAccountListResponseAccountsStatusBlocked CustomerAccountListResponseAccountsStatus = "blocked"
 )
 
+func (r CustomerAccountListResponseAccountsStatus) IsKnown() bool {
+	switch r {
+	case CustomerAccountListResponseAccountsStatusEnabled, CustomerAccountListResponseAccountsStatusDeleted, CustomerAccountListResponseAccountsStatusBlocked:
+		return true
+	}
+	return false
+}
+
 // A single balance element.
 type CustomerAccountListResponseAccountsBalance struct {
 	BalanceAmount CustomerAccountListResponseAccountsBalancesBalanceAmount `json:"balanceAmount,required"`
@@ -579,6 +619,14 @@ const (
 	CustomerAccountListResponseAccountsBalancesBalanceTypeInterimBooked    CustomerAccountListResponseAccountsBalancesBalanceType = "interimBooked"
 )
 
+func (r CustomerAccountListResponseAccountsBalancesBalanceType) IsKnown() bool {
+	switch r {
+	case CustomerAccountListResponseAccountsBalancesBalanceTypeClosingBooked, CustomerAccountListResponseAccountsBalancesBalanceTypeOpeningBooked, CustomerAccountListResponseAccountsBalancesBalanceTypeInterimAvailable, CustomerAccountListResponseAccountsBalancesBalanceTypeInterimBooked:
+		return true
+	}
+	return false
+}
+
 // ExternalCashAccountType1Code from ISO 20022.
 type CustomerAccountListResponseAccountsCashAccountType string
 
@@ -607,6 +655,14 @@ const (
 	CustomerAccountListResponseAccountsCashAccountTypeVacc CustomerAccountListResponseAccountsCashAccountType = "VACC"
 	CustomerAccountListResponseAccountsCashAccountTypeNfca CustomerAccountListResponseAccountsCashAccountType = "NFCA"
 )
+
+func (r CustomerAccountListResponseAccountsCashAccountType) IsKnown() bool {
+	switch r {
+	case CustomerAccountListResponseAccountsCashAccountTypeCacc, CustomerAccountListResponseAccountsCashAccountTypeCard, CustomerAccountListResponseAccountsCashAccountTypeCash, CustomerAccountListResponseAccountsCashAccountTypeChar, CustomerAccountListResponseAccountsCashAccountTypeCish, CustomerAccountListResponseAccountsCashAccountTypeComm, CustomerAccountListResponseAccountsCashAccountTypeCpac, CustomerAccountListResponseAccountsCashAccountTypeLlsv, CustomerAccountListResponseAccountsCashAccountTypeLoan, CustomerAccountListResponseAccountsCashAccountTypeMgld, CustomerAccountListResponseAccountsCashAccountTypeMoma, CustomerAccountListResponseAccountsCashAccountTypeNrex, CustomerAccountListResponseAccountsCashAccountTypeOdft, CustomerAccountListResponseAccountsCashAccountTypeOndp, CustomerAccountListResponseAccountsCashAccountTypeOthr, CustomerAccountListResponseAccountsCashAccountTypeSacc, CustomerAccountListResponseAccountsCashAccountTypeSlry, CustomerAccountListResponseAccountsCashAccountTypeSvgs, CustomerAccountListResponseAccountsCashAccountTypeTaxe, CustomerAccountListResponseAccountsCashAccountTypeTran, CustomerAccountListResponseAccountsCashAccountTypeTras, CustomerAccountListResponseAccountsCashAccountTypeVacc, CustomerAccountListResponseAccountsCashAccountTypeNfca:
+		return true
+	}
+	return false
+}
 
 // Identifies a Person that acts as an account owner
 type CustomerAccountListResponseAccountsOwnerName struct {
@@ -648,6 +704,14 @@ const (
 	CustomerAccountListResponseAccountsUsagePriv CustomerAccountListResponseAccountsUsage = "PRIV"
 	CustomerAccountListResponseAccountsUsageOrga CustomerAccountListResponseAccountsUsage = "ORGA"
 )
+
+func (r CustomerAccountListResponseAccountsUsage) IsKnown() bool {
+	switch r {
+	case CustomerAccountListResponseAccountsUsagePriv, CustomerAccountListResponseAccountsUsageOrga:
+		return true
+	}
+	return false
+}
 
 type CustomerAccountGetParams struct {
 	UserID param.Field[string] `header:"userId,required"`
@@ -704,6 +768,14 @@ const (
 	CustomerAccountListParamsCashAccountTypeNfca CustomerAccountListParamsCashAccountType = "NFCA"
 )
 
+func (r CustomerAccountListParamsCashAccountType) IsKnown() bool {
+	switch r {
+	case CustomerAccountListParamsCashAccountTypeCacc, CustomerAccountListParamsCashAccountTypeCard, CustomerAccountListParamsCashAccountTypeCash, CustomerAccountListParamsCashAccountTypeChar, CustomerAccountListParamsCashAccountTypeCish, CustomerAccountListParamsCashAccountTypeComm, CustomerAccountListParamsCashAccountTypeCpac, CustomerAccountListParamsCashAccountTypeLlsv, CustomerAccountListParamsCashAccountTypeLoan, CustomerAccountListParamsCashAccountTypeMgld, CustomerAccountListParamsCashAccountTypeMoma, CustomerAccountListParamsCashAccountTypeNrex, CustomerAccountListParamsCashAccountTypeOdft, CustomerAccountListParamsCashAccountTypeOndp, CustomerAccountListParamsCashAccountTypeOthr, CustomerAccountListParamsCashAccountTypeSacc, CustomerAccountListParamsCashAccountTypeSlry, CustomerAccountListParamsCashAccountTypeSvgs, CustomerAccountListParamsCashAccountTypeTaxe, CustomerAccountListParamsCashAccountTypeTran, CustomerAccountListParamsCashAccountTypeTras, CustomerAccountListParamsCashAccountTypeVacc, CustomerAccountListParamsCashAccountTypeNfca:
+		return true
+	}
+	return false
+}
+
 // Account status. The value is one of the following:
 //
 // - "enabled": account is available
@@ -716,6 +788,14 @@ const (
 	CustomerAccountListParamsStatusDeleted CustomerAccountListParamsStatus = "deleted"
 	CustomerAccountListParamsStatusBlocked CustomerAccountListParamsStatus = "blocked"
 )
+
+func (r CustomerAccountListParamsStatus) IsKnown() bool {
+	switch r {
+	case CustomerAccountListParamsStatusEnabled, CustomerAccountListParamsStatusDeleted, CustomerAccountListParamsStatusBlocked:
+		return true
+	}
+	return false
+}
 
 type CustomerAccountCloseParams struct {
 	IdempotencyKey param.Field[string] `header:"idempotencyKey"`

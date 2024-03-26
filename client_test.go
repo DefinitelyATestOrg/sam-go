@@ -1,14 +1,16 @@
-// File generated from our OpenAPI spec by Stainless.
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 package sam_test
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"testing"
 	"time"
 
 	"github.com/DefinitelyATestOrg/sam-go/v3"
+	"github.com/DefinitelyATestOrg/sam-go/v3/internal"
 	"github.com/DefinitelyATestOrg/sam-go/v3/option"
 )
 
@@ -18,6 +20,33 @@ type closureTransport struct {
 
 func (t *closureTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	return t.fn(req)
+}
+
+func TestUserAgentHeader(t *testing.T) {
+	var userAgent string
+	client := sam.NewClient(
+		option.WithHTTPClient(&http.Client{
+			Transport: &closureTransport{
+				fn: func(req *http.Request) (*http.Response, error) {
+					userAgent = req.Header.Get("User-Agent")
+					return &http.Response{
+						StatusCode: http.StatusOK,
+					}, nil
+				},
+			},
+		}),
+	)
+	client.Customers.Accounts.Get(
+		context.Background(),
+		"REPLACE_ME",
+		"REPLACE_ME",
+		sam.CustomerAccountGetParams{
+			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
+		},
+	)
+	if userAgent != fmt.Sprintf("Sam/Go %s", internal.PackageVersion) {
+		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
+	}
 }
 
 func TestRetryAfter(t *testing.T) {
