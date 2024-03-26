@@ -1,4 +1,4 @@
-// File generated from our OpenAPI spec by Stainless.
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 package requestconfig
 
@@ -22,6 +22,12 @@ import (
 	"github.com/DefinitelyATestOrg/sam-go/v3/internal/apiform"
 	"github.com/DefinitelyATestOrg/sam-go/v3/internal/apiquery"
 )
+
+func getDefaultHeaders() map[string]string {
+	return map[string]string{
+		"User-Agent": fmt.Sprintf("Sam/Go %s", internal.PackageVersion),
+	}
+}
 
 func getNormalizedOS() string {
 	switch runtime.GOOS {
@@ -92,8 +98,11 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 		hasSerializationFunc = true
 	}
 	if body, ok := body.(apiquery.Queryer); ok {
-		u = u + "?" + body.URLQuery().Encode()
 		hasSerializationFunc = true
+		params := body.URLQuery().Encode()
+		if params != "" {
+			u = u + "?" + params
+		}
 	}
 
 	// Fallback to json serialization if none of the serialization functions that we expect
@@ -115,6 +124,9 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 	}
 
 	req.Header.Set("Accept", "application/json")
+	for k, v := range getDefaultHeaders() {
+		req.Header.Add(k, v)
+	}
 
 	for k, v := range getPlatformProperties() {
 		req.Header.Add(k, v)
