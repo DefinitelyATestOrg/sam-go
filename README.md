@@ -5,6 +5,8 @@
 The Sam Go library provides convenient access to [the Sam REST
 API](https://docs.elborai.software) from applications written in Go. The full API of this library can be found in [api.md](api.md).
 
+It is generated with [Stainless](https://www.stainlessapi.com/).
+
 ## Installation
 
 <!-- x-release-please-start-version -->
@@ -22,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/DefinitelyATestOrg/sam-go/v3@v3.0.0-beta.1'
+go get -u 'github.com/DefinitelyATestOrg/sam-go/v3@v3.0.0-beta.2'
 ```
 
 <!-- x-release-please-end -->
@@ -63,7 +65,7 @@ func main() {
 
 ```
 
-### Request Fields
+### Request fields
 
 All request parameters are wrapped in a generic `Field` type,
 which we use to distinguish zero values from null or omitted fields.
@@ -93,7 +95,7 @@ params := FooParams{
 }
 ```
 
-### Response Objects
+### Response objects
 
 All fields in response structs are value types (not pointers or wrappers).
 
@@ -291,7 +293,7 @@ You may also replace the default `http.Client` with
 accepted (this overwrites any previous client) and receives requests after any
 middleware has been applied.
 
-## Semantic Versioning
+## Semantic versioning
 
 This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
 
