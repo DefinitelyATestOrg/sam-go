@@ -165,16 +165,8 @@ This library provides some conveniences for working with paginated list endpoint
 
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
-```go
-// TODO
-```
-
 Or you can use simple `.List()` methods to fetch a single page and receive a standard response object
 with additional helper methods like `.GetNextPage()`, e.g.:
-
-```go
-// TODO
-```
 
 ### Errors
 
@@ -229,6 +221,19 @@ client.Customers.Accounts.Get(
 	option.WithRequestTimeout(20*time.Second),
 )
 ```
+
+### File uploads
+
+Request parameters that correspond to file uploads in multipart requests are typed as
+`param.Field[io.Reader]`. The contents of the `io.Reader` will by default be sent as a multipart form
+part with the file name of "anonymous_file" and content-type of "application/octet-stream".
+
+The file name and content-type can be customized by implementing `Name() string` or `ContentType()
+string` on the run-time type of `io.Reader`. Note that `os.File` implements `Name() string`, so a
+file returned by `os.Open` will be sent with the file name on disk.
+
+We also provide a helper `sam.FileParam(reader io.Reader, filename string, contentType string)`
+which can be used to wrap any `io.Reader` with the appropriate file name and content type.
 
 ## Retries
 
