@@ -22,6 +22,7 @@ func TestUsage(t *testing.T) {
 	}
 	client := sam.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithPlop("you plop plop"),
 	)
 	customerAccountGetResponse, err := client.Customers.Accounts.Get(
 		context.TODO(),

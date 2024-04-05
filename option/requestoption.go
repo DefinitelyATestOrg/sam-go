@@ -206,3 +206,11 @@ func WithRequestTimeout(dur time.Duration) RequestOption {
 func WithEnvironmentProduction() RequestOption {
 	return WithBaseURL("http://localhost:8085//")
 }
+
+// WithPlop returns a RequestOption that sets the client setting "plop".
+func WithPlop(value string) RequestOption {
+	return func(r *requestconfig.RequestConfig) error {
+		r.Plop = value
+		return nil
+	}
+}

@@ -5,6 +5,7 @@ package sam
 import (
 	"context"
 	"net/http"
+	"os"
 
 	"github.com/DefinitelyATestOrg/sam-go/v3/internal/requestconfig"
 	"github.com/DefinitelyATestOrg/sam-go/v3/option"
@@ -19,11 +20,14 @@ type Client struct {
 }
 
 // NewClient generates a new client with the default option read from the
-// environment (). The option passed in as arguments are applied after these
+// environment (PLOP). The option passed in as arguments are applied after these
 // default arguments, and all option will be passed down to the services and
 // requests that this client makes.
 func NewClient(opts ...option.RequestOption) (r *Client) {
 	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
+	if o, ok := os.LookupEnv("PLOP"); ok {
+		defaults = append(defaults, option.WithPlop(o))
+	}
 	opts = append(defaults, opts...)
 
 	r = &Client{Options: opts}
