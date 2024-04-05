@@ -45,10 +45,13 @@ import (
 	"fmt"
 
 	"github.com/DefinitelyATestOrg/sam-go/v3"
+	"github.com/DefinitelyATestOrg/sam-go/v3/option"
 )
 
 func main() {
-	client := sam.NewClient()
+	client := sam.NewClient(
+		option.WithPlop("you plop plop"), // defaults to os.LookupEnv("PLOP")
+	)
 	customerAccountGetResponse, err := client.Customers.Accounts.Get(
 		context.TODO(),
 		"REPLACE_ME",
