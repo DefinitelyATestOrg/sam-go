@@ -23,6 +23,7 @@ func TestCustomerAccountGet(t *testing.T) {
 	}
 	client := sam.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithPlop("you plop plop"),
 	)
 	_, err := client.Customers.Accounts.Get(
 		context.TODO(),
@@ -51,6 +52,7 @@ func TestCustomerAccountListWithOptionalParams(t *testing.T) {
 	}
 	client := sam.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithPlop("you plop plop"),
 	)
 	_, err := client.Customers.Accounts.List(
 		context.TODO(),
@@ -80,6 +82,7 @@ func TestCustomerAccountCloseWithOptionalParams(t *testing.T) {
 	}
 	client := sam.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithPlop("you plop plop"),
 	)
 	err := client.Customers.Accounts.Close(
 		context.TODO(),
