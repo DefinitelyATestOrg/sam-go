@@ -22,18 +22,10 @@ func TestUsage(t *testing.T) {
 	}
 	client := sam.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithPlop("you plop plop"),
+		option.WithAuthToken("My Auth Token"),
 	)
-	customerAccountGetResponse, err := client.Customers.Accounts.Get(
-		context.TODO(),
-		"REPLACE_ME",
-		"REPLACE_ME",
-		sam.CustomerAccountGetParams{
-			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
-		},
-	)
+	_, err := client.ActionSets.Get(context.TODO(), "abc123")
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%+v\n", customerAccountGetResponse.Account)
 }

@@ -36,14 +36,7 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Customers.Accounts.Get(
-		context.Background(),
-		"REPLACE_ME",
-		"REPLACE_ME",
-		sam.CustomerAccountGetParams{
-			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
-		},
-	)
+	client.Agents.Get(context.Background(), "abc123")
 	if userAgent != fmt.Sprintf("Sam/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
 	}
@@ -66,14 +59,7 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	res, err := client.Customers.Accounts.Get(
-		context.Background(),
-		"REPLACE_ME",
-		"REPLACE_ME",
-		sam.CustomerAccountGetParams{
-			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
-		},
-	)
+	res, err := client.Agents.Get(context.Background(), "abc123")
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
 	}
@@ -99,14 +85,7 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	res, err := client.Customers.Accounts.Get(
-		context.Background(),
-		"REPLACE_ME",
-		"REPLACE_ME",
-		sam.CustomerAccountGetParams{
-			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
-		},
-	)
+	res, err := client.Agents.Get(context.Background(), "abc123")
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
 	}
@@ -128,14 +107,7 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	res, err := client.Customers.Accounts.Get(
-		cancelCtx,
-		"REPLACE_ME",
-		"REPLACE_ME",
-		sam.CustomerAccountGetParams{
-			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
-		},
-	)
+	res, err := client.Agents.Get(cancelCtx, "abc123")
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
 	}
@@ -154,14 +126,7 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	res, err := client.Customers.Accounts.Get(
-		cancelCtx,
-		"REPLACE_ME",
-		"REPLACE_ME",
-		sam.CustomerAccountGetParams{
-			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
-		},
-	)
+	res, err := client.Agents.Get(cancelCtx, "abc123")
 	if err == nil || res != nil {
 		t.Error("expected there to be a cancel error and for the response to be nil")
 	}
@@ -186,14 +151,7 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		res, err := client.Customers.Accounts.Get(
-			deadlineCtx,
-			"REPLACE_ME",
-			"REPLACE_ME",
-			sam.CustomerAccountGetParams{
-				UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
-			},
-		)
+		res, err := client.Agents.Get(deadlineCtx, "abc123")
 		if err == nil || res != nil {
 			t.Error("expected there to be a deadline error and for the response to be nil")
 		}
