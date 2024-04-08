@@ -15,24 +15,42 @@ import (
 // interacting with the sam API. You should not instantiate this client directly,
 // and instead use the [NewClient] method instead.
 type Client struct {
-	Options   []option.RequestOption
-	Customers *CustomerService
+	Options           []option.RequestOption
+	ReferenceSets     *ReferenceSetService
+	ReferenceSessions *ReferenceSessionService
+	Organizations     *OrganizationService
+	Members           *MemberService
+	Feedbacks         *FeedbackService
+	Documents         *DocumentService
+	Corpora           *CorporaService
+	Agents            *AgentService
+	ActionSets        *ActionSetService
+	Actions           *ActionService
 }
 
 // NewClient generates a new client with the default option read from the
-// environment (PLOP). The option passed in as arguments are applied after these
-// default arguments, and all option will be passed down to the services and
-// requests that this client makes.
+// environment (MAVENAGI_AUTH_TOKEN). The option passed in as arguments are applied
+// after these default arguments, and all option will be passed down to the
+// services and requests that this client makes.
 func NewClient(opts ...option.RequestOption) (r *Client) {
 	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
-	if o, ok := os.LookupEnv("PLOP"); ok {
-		defaults = append(defaults, option.WithPlop(o))
+	if o, ok := os.LookupEnv("MAVENAGI_AUTH_TOKEN"); ok {
+		defaults = append(defaults, option.WithAuthToken(o))
 	}
 	opts = append(defaults, opts...)
 
 	r = &Client{Options: opts}
 
-	r.Customers = NewCustomerService(opts...)
+	r.ReferenceSets = NewReferenceSetService(opts...)
+	r.ReferenceSessions = NewReferenceSessionService(opts...)
+	r.Organizations = NewOrganizationService(opts...)
+	r.Members = NewMemberService(opts...)
+	r.Feedbacks = NewFeedbackService(opts...)
+	r.Documents = NewDocumentService(opts...)
+	r.Corpora = NewCorporaService(opts...)
+	r.Agents = NewAgentService(opts...)
+	r.ActionSets = NewActionSetService(opts...)
+	r.Actions = NewActionService(opts...)
 
 	return
 }
