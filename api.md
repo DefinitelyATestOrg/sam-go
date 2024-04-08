@@ -35,6 +35,12 @@ Methods:
 
 # Documents
 
+Methods:
+
+- <code title="get /api/v1/document/{doc_id}">client.Documents.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3#DocumentService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, docID <a href="https://pkg.go.dev/builtin#string">string</a>, query <a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3">sam</a>.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3#DocumentGetParams">DocumentGetParams</a>) (http.Response, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="put /api/v1/document/{doc_id}">client.Documents.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3#DocumentService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, docID <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3">sam</a>.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3#DocumentUpdateParams">DocumentUpdateParams</a>) (http.Response, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="delete /api/v1/document/{doc_id}">client.Documents.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3#DocumentService.Delete">Delete</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, docID <a href="https://pkg.go.dev/builtin#string">string</a>) <a href="https://pkg.go.dev/builtin#error">error</a></code>
+
 # Corpora
 
 Methods:
@@ -52,6 +58,10 @@ Methods:
 - <code title="delete /api/v1/agents/{id}">client.Agents.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3#AgentService.Delete">Delete</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>) <a href="https://pkg.go.dev/builtin#error">error</a></code>
 
 ## HiddenTags
+
+Methods:
+
+- <code title="put /api/v1/agents/{id}/hiddenTags">client.Agents.HiddenTags.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3#AgentHiddenTagService.Update">Update</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, body <a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3">sam</a>.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3#AgentHiddenTagUpdateParams">AgentHiddenTagUpdateParams</a>) (http.Response, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 ## Configs
 
