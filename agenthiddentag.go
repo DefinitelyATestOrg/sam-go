@@ -3,6 +3,13 @@
 package sam
 
 import (
+	"context"
+	"fmt"
+	"net/http"
+
+	"github.com/DefinitelyATestOrg/sam-go/v3/internal/apijson"
+	"github.com/DefinitelyATestOrg/sam-go/v3/internal/param"
+	"github.com/DefinitelyATestOrg/sam-go/v3/internal/requestconfig"
 	"github.com/DefinitelyATestOrg/sam-go/v3/option"
 )
 
@@ -21,4 +28,20 @@ func NewAgentHiddenTagService(opts ...option.RequestOption) (r *AgentHiddenTagSe
 	r = &AgentHiddenTagService{}
 	r.Options = opts
 	return
+}
+
+func (r *AgentHiddenTagService) Update(ctx context.Context, id string, body AgentHiddenTagUpdateParams, opts ...option.RequestOption) (res *http.Response, err error) {
+	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	path := fmt.Sprintf("api/v1/agents/%s/hiddenTags", id)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
+	return
+}
+
+type AgentHiddenTagUpdateParams struct {
+	Body param.Field[[]string] `json:"body,required"`
+}
+
+func (r AgentHiddenTagUpdateParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r.Body)
 }
