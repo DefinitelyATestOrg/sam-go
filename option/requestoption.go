@@ -207,10 +207,10 @@ func WithEnvironmentProduction() RequestOption {
 	return WithBaseURL("http://localhost:8085//")
 }
 
-// WithPlop returns a RequestOption that sets the client setting "plop".
-func WithPlop(value string) RequestOption {
+// WithAuthToken returns a RequestOption that sets the client setting "auth_token".
+func WithAuthToken(value string) RequestOption {
 	return func(r *requestconfig.RequestConfig) error {
-		r.Plop = value
-		return nil
+		r.AuthToken = value
+		return r.Apply(WithHeader("authorization", fmt.Sprintf("Bearer %s", r.AuthToken)))
 	}
 }

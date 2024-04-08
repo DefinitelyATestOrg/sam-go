@@ -42,7 +42,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/DefinitelyATestOrg/sam-go/v3"
 	"github.com/DefinitelyATestOrg/sam-go/v3/option"
@@ -50,20 +49,12 @@ import (
 
 func main() {
 	client := sam.NewClient(
-		option.WithPlop("you plop plop"), // defaults to os.LookupEnv("PLOP")
+		option.WithAuthToken("My Auth Token"), // defaults to os.LookupEnv("MAVENAGI_AUTH_TOKEN")
 	)
-	customerAccountGetResponse, err := client.Customers.Accounts.Get(
-		context.TODO(),
-		"REPLACE_ME",
-		"REPLACE_ME",
-		sam.CustomerAccountGetParams{
-			UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
-		},
-	)
+	actionSet, err := client.ActionSets.Get(context.TODO(), "abc123")
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", customerAccountGetResponse.Account)
 }
 
 ```
@@ -152,7 +143,7 @@ client := sam.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Customers.Accounts.Get(context.TODO(), ...,
+client.Agents.Get(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -181,21 +172,14 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Customers.Accounts.Get(
-	context.TODO(),
-	"REPLACE_ME",
-	"REPLACE_ME",
-	sam.CustomerAccountGetParams{
-		UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
-	},
-)
+_, err := client.Agents.Get(context.TODO(), "abc123")
 if err != nil {
 	var apierr *sam.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
 	}
-	panic(err.Error()) // GET "/v1/customers/{customerId}/accounts/{accountId}": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/api/v1/agents/{id}": 400 Bad Request { ... }
 }
 ```
 
@@ -213,13 +197,9 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Customers.Accounts.Get(
+client.Agents.Get(
 	ctx,
-	"REPLACE_ME",
-	"REPLACE_ME",
-	sam.CustomerAccountGetParams{
-		UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
-	},
+	"abc123",
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
 )
@@ -253,13 +233,9 @@ client := sam.NewClient(
 )
 
 // Override per-request:
-client.Customers.Accounts.Get(
+client.Agents.Get(
 	context.TODO(),
-	"REPLACE_ME",
-	"REPLACE_ME",
-	sam.CustomerAccountGetParams{
-		UserID: sam.F("36a22460-ebc8-4ffe-a213-1683c5a420c5"),
-	},
+	"abc123",
 	option.WithMaxRetries(5),
 )
 ```
