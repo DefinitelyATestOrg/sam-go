@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.0.0-beta.3 (2024-04-11)
+
+Full Changelog: [v3.0.0-beta.2...v3.0.0-beta.3](https://github.com/DefinitelyATestOrg/sam-go/compare/v3.0.0-beta.2...v3.0.0-beta.3)
+
+### Features
+
+* **api:** update via SDK Studio ([#16](https://github.com/DefinitelyATestOrg/sam-go/issues/16)) ([b96baa3](https://github.com/DefinitelyATestOrg/sam-go/commit/b96baa334c6ca34beab0e25869a2449e277185b8))
+* **api:** update via SDK Studio ([#18](https://github.com/DefinitelyATestOrg/sam-go/issues/18)) ([4726783](https://github.com/DefinitelyATestOrg/sam-go/commit/47267833719a86a605ea0bb89e76a3ebaef8d0a2))
+* **api:** update via SDK Studio ([#19](https://github.com/DefinitelyATestOrg/sam-go/issues/19)) ([8a7cfaa](https://github.com/DefinitelyATestOrg/sam-go/commit/8a7cfaaf06ece510c4e8a921d4ab453cc317651b))
+* **api:** update via SDK Studio ([#20](https://github.com/DefinitelyATestOrg/sam-go/issues/20)) ([b7b004b](https://github.com/DefinitelyATestOrg/sam-go/commit/b7b004bd793fee39ee88c61024c83f5ab591c0dc))
+* **api:** update via SDK Studio ([#21](https://github.com/DefinitelyATestOrg/sam-go/issues/21)) ([5bbfe13](https://github.com/DefinitelyATestOrg/sam-go/commit/5bbfe1338e1b5bdf6ae58a2f0f4e2276f2957917))
+
 ## 3.0.0-beta.2 (2024-03-29)
 
 Full Changelog: [v3.0.0-beta.1...v3.0.0-beta.2](https://github.com/DefinitelyATestOrg/sam-go/compare/v3.0.0-beta.1...v3.0.0-beta.2)
