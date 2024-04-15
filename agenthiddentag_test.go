@@ -30,7 +30,7 @@ func TestAgentHiddenTagUpdate(t *testing.T) {
 		context.TODO(),
 		"string",
 		sam.AgentHiddenTagUpdateParams{
-			Body: sam.F([]string{"string"}),
+			Body: []string{"string"},
 		},
 	)
 	if err != nil {

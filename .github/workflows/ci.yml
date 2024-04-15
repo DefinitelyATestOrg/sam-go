@@ -2,10 +2,10 @@ name: CI
 on:
   push:
     branches:
-      - v3
+      - stainless
   pull_request:
     branches:
-      - v3
+      - stainless
 
 jobs:
   lint:
@@ -15,9 +15,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-  
+
       - name: Setup go
         uses: actions/setup-go@v5
 
       - run: |
           go build ./...
+
+  
