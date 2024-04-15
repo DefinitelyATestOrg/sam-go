@@ -8,7 +8,6 @@ import (
 	"net/http"
 
 	"github.com/DefinitelyATestOrg/sam-go/v3/internal/apijson"
-	"github.com/DefinitelyATestOrg/sam-go/v3/internal/param"
 	"github.com/DefinitelyATestOrg/sam-go/v3/internal/requestconfig"
 	"github.com/DefinitelyATestOrg/sam-go/v3/option"
 )
@@ -39,7 +38,7 @@ func (r *AgentHiddenTagService) Update(ctx context.Context, id string, body Agen
 }
 
 type AgentHiddenTagUpdateParams struct {
-	Body param.Field[[]string] `json:"body,required"`
+	Body []string `json:"body,required"`
 }
 
 func (r AgentHiddenTagUpdateParams) MarshalJSON() (data []byte, err error) {
