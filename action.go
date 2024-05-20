@@ -14,9 +14,11 @@ import (
 )
 
 // ActionService contains methods and other services that help with interacting
-// with the sam API. Note, unlike clients, this service does not read variables
-// from the environment automatically. You should not instantiate this service
-// directly, and instead use the [NewActionService] method instead.
+// with the sam API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewActionService] method instead.
 type ActionService struct {
 	Options []option.RequestOption
 }
