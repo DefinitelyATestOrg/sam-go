@@ -14,9 +14,11 @@ import (
 )
 
 // ReferenceSetService contains methods and other services that help with
-// interacting with the sam API. Note, unlike clients, this service does not read
-// variables from the environment automatically. You should not instantiate this
-// service directly, and instead use the [NewReferenceSetService] method instead.
+// interacting with the sam API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewReferenceSetService] method instead.
 type ReferenceSetService struct {
 	Options []option.RequestOption
 }
