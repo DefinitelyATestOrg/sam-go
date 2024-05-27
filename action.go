@@ -4,6 +4,7 @@ package sam
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -35,6 +36,10 @@ func NewActionService(opts ...option.RequestOption) (r *ActionService) {
 func (r *ActionService) Get(ctx context.Context, actionID string, opts ...option.RequestOption) (res *http.Response, err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	if actionID == "" {
+		err = errors.New("missing required actionId parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/actions/%s", actionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -43,6 +48,10 @@ func (r *ActionService) Get(ctx context.Context, actionID string, opts ...option
 func (r *ActionService) Update(ctx context.Context, actionID string, body ActionUpdateParams, opts ...option.RequestOption) (res *http.Response, err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	if actionID == "" {
+		err = errors.New("missing required actionId parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/actions/%s", actionID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
 	return
