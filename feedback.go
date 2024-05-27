@@ -4,6 +4,7 @@ package sam
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -35,6 +36,10 @@ func NewFeedbackService(opts ...option.RequestOption) (r *FeedbackService) {
 func (r *FeedbackService) Update(ctx context.Context, feedbackID string, body FeedbackUpdateParams, opts ...option.RequestOption) (res *http.Response, err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	if feedbackID == "" {
+		err = errors.New("missing required feedback_id parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/feedbacks/%s", feedbackID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
 	return

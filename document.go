@@ -4,6 +4,7 @@ package sam
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -38,6 +39,10 @@ func NewDocumentService(opts ...option.RequestOption) (r *DocumentService) {
 func (r *DocumentService) Get(ctx context.Context, docID string, query DocumentGetParams, opts ...option.RequestOption) (res *http.Response, err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	if docID == "" {
+		err = errors.New("missing required doc_id parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/document/%s", docID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
@@ -46,6 +51,10 @@ func (r *DocumentService) Get(ctx context.Context, docID string, query DocumentG
 func (r *DocumentService) Update(ctx context.Context, docID string, body DocumentUpdateParams, opts ...option.RequestOption) (res *http.Response, err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	if docID == "" {
+		err = errors.New("missing required doc_id parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/document/%s", docID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
 	return
@@ -54,6 +63,10 @@ func (r *DocumentService) Update(ctx context.Context, docID string, body Documen
 func (r *DocumentService) Delete(ctx context.Context, docID string, opts ...option.RequestOption) (err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "")}, opts...)
+	if docID == "" {
+		err = errors.New("missing required doc_id parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/document/%s", docID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, nil, opts...)
 	return

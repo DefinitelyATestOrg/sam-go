@@ -4,6 +4,7 @@ package sam
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -36,6 +37,10 @@ func NewCorporaService(opts ...option.RequestOption) (r *CorporaService) {
 func (r *CorporaService) Get(ctx context.Context, corpusID string, opts ...option.RequestOption) (res *http.Response, err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	if corpusID == "" {
+		err = errors.New("missing required corpus_id parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/corpora/%s", corpusID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -44,6 +49,10 @@ func (r *CorporaService) Get(ctx context.Context, corpusID string, opts ...optio
 func (r *CorporaService) Update(ctx context.Context, corpusID string, body CorporaUpdateParams, opts ...option.RequestOption) (res *http.Response, err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	if corpusID == "" {
+		err = errors.New("missing required corpus_id parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/corpora/%s", corpusID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
 	return
@@ -52,6 +61,10 @@ func (r *CorporaService) Update(ctx context.Context, corpusID string, body Corpo
 func (r *CorporaService) Delete(ctx context.Context, corpusID string, opts ...option.RequestOption) (err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "")}, opts...)
+	if corpusID == "" {
+		err = errors.New("missing required corpus_id parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/corpora/%s", corpusID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, nil, opts...)
 	return
