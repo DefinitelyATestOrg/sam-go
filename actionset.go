@@ -4,6 +4,7 @@ package sam
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -35,6 +36,10 @@ func NewActionSetService(opts ...option.RequestOption) (r *ActionSetService) {
 func (r *ActionSetService) Get(ctx context.Context, id string, opts ...option.RequestOption) (res *http.Response, err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	if id == "" {
+		err = errors.New("missing required id parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/actionsets/%s", id)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -43,6 +48,10 @@ func (r *ActionSetService) Get(ctx context.Context, id string, opts ...option.Re
 func (r *ActionSetService) Update(ctx context.Context, params ActionSetUpdateParams, opts ...option.RequestOption) (res *http.Response, err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	if params.PathID.Value == "" {
+		err = errors.New("missing required path_id parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/actionsets/%s", params.PathID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, params, &res, opts...)
 	return
@@ -51,6 +60,10 @@ func (r *ActionSetService) Update(ctx context.Context, params ActionSetUpdatePar
 func (r *ActionSetService) Delete(ctx context.Context, id string, opts ...option.RequestOption) (err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "")}, opts...)
+	if id == "" {
+		err = errors.New("missing required id parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/actionsets/%s", id)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, nil, opts...)
 	return

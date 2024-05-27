@@ -4,6 +4,7 @@ package sam
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -37,6 +38,10 @@ func NewAgentConfigService(opts ...option.RequestOption) (r *AgentConfigService)
 func (r *AgentConfigService) Get(ctx context.Context, agentID string, integration AgentConfigGetParamsIntegration, opts ...option.RequestOption) (res *http.Response, err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	if agentID == "" {
+		err = errors.New("missing required agentId parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/agents/%s/configs/%v", agentID, integration)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
@@ -45,6 +50,10 @@ func (r *AgentConfigService) Get(ctx context.Context, agentID string, integratio
 func (r *AgentConfigService) Update(ctx context.Context, agentID string, integration AgentConfigUpdateParamsIntegration, body AgentConfigUpdateParams, opts ...option.RequestOption) (res *http.Response, err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	if agentID == "" {
+		err = errors.New("missing required agentId parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/agents/%s/configs/%v", agentID, integration)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
 	return

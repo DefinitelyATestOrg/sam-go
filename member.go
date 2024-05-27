@@ -4,6 +4,7 @@ package sam
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -35,6 +36,10 @@ func NewMemberService(opts ...option.RequestOption) (r *MemberService) {
 func (r *MemberService) Update(ctx context.Context, memberID string, body MemberUpdateParams, opts ...option.RequestOption) (res *http.Response, err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	if memberID == "" {
+		err = errors.New("missing required memberId parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/members/%s", memberID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
 	return
@@ -43,6 +48,10 @@ func (r *MemberService) Update(ctx context.Context, memberID string, body Member
 func (r *MemberService) Delete(ctx context.Context, memberID string, opts ...option.RequestOption) (err error) {
 	opts = append(r.Options[:], opts...)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "")}, opts...)
+	if memberID == "" {
+		err = errors.New("missing required memberId parameter")
+		return
+	}
 	path := fmt.Sprintf("api/v1/members/%s", memberID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, nil, opts...)
 	return
