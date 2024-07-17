@@ -1,11 +1,9 @@
-# Sam Go API Library
+# Increase Go API Library
 
 <a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3"><img src="https://pkg.go.dev/badge/github.com/DefinitelyATestOrg/sam-go/v3.svg" alt="Go Reference"></a>
 
-The Sam Go library provides convenient access to [the Sam REST
-API](https://docs.elborai.software) from applications written in Go. The full API of this library can be found in [api.md](api.md).
-
-It is generated with [Stainless](https://www.stainlessapi.com/).
+The Increase Go library provides convenient access to [the Increase REST
+API](https://increase.com/documentation) from applications written in Go. The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -13,7 +11,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ```go
 import (
-	"github.com/DefinitelyATestOrg/sam-go/v3" // imported as sam
+	"github.com/DefinitelyATestOrg/sam-go/v3" // imported as samgo
 )
 ```
 
@@ -42,19 +40,24 @@ package main
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/DefinitelyATestOrg/sam-go/v3"
 	"github.com/DefinitelyATestOrg/sam-go/v3/option"
 )
 
 func main() {
-	client := sam.NewClient(
-		option.WithAuthToken("My Auth Token"), // defaults to os.LookupEnv("MAVENAGI_AUTH_TOKEN")
+	client := samgo.NewClient(
+		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("INCREASE_API_KEY")
+		option.WithEnvironmentSandbox(), // defaults to option.WithEnvironmentProduction()
 	)
-	actionSet, err := client.ActionSets.Get(context.TODO(), "abc123")
+	account, err := client.Accounts.New(context.TODO(), samgo.AccountNewParams{
+		Name: samgo.F("My First Increase Account"),
+	})
 	if err != nil {
 		panic(err.Error())
 	}
+	fmt.Printf("%+v\n", account.ID)
 }
 
 ```
@@ -73,18 +76,18 @@ To send a null, use `Null[T]()`, and to send a nonconforming value, use `Raw[T](
 
 ```go
 params := FooParams{
-	Name: sam.F("hello"),
+	Name: samgo.F("hello"),
 
 	// Explicitly send `"description": null`
-	Description: sam.Null[string](),
+	Description: samgo.Null[string](),
 
-	Point: sam.F(sam.Point{
-		X: sam.Int(0),
-		Y: sam.Int(1),
+	Point: samgo.F(samgo.Point{
+		X: samgo.Int(0),
+		Y: samgo.Int(1),
 
 		// In cases where the API specifies a given type,
 		// but you want to send something else, use `Raw`:
-		Z: sam.Raw[int64](0.01), // sends a float
+		Z: samgo.Raw[int64](0.01), // sends a float
 	}),
 }
 ```
@@ -138,12 +141,12 @@ This library uses the functional options pattern. Functions defined in the
 requests. For example:
 
 ```go
-client := sam.NewClient(
+client := samgo.NewClient(
 	// Adds a header to every request made by the client
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Agents.Get(context.TODO(), ...,
+client.Accounts.New(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -159,27 +162,58 @@ This library provides some conveniences for working with paginated list endpoint
 
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
+```go
+iter := client.Accounts.ListAutoPaging(context.TODO(), samgo.AccountListParams{})
+// Automatically fetches more pages as needed.
+for iter.Next() {
+	account := iter.Current()
+	fmt.Printf("%+v\n", account)
+}
+if err := iter.Err(); err != nil {
+	panic(err.Error())
+}
+```
+
 Or you can use simple `.List()` methods to fetch a single page and receive a standard response object
 with additional helper methods like `.GetNextPage()`, e.g.:
+
+```go
+page, err := client.Accounts.List(context.TODO(), samgo.AccountListParams{})
+for page != nil {
+	for _, account := range page.Data {
+		fmt.Printf("%+v\n", account)
+	}
+	page, err = page.GetNextPage()
+}
+if err != nil {
+	panic(err.Error())
+}
+```
 
 ### Errors
 
 When the API returns a non-success status code, we return an error with type
-`*sam.Error`. This contains the `StatusCode`, `*http.Request`, and
+`*samgo.Error`. This contains the `StatusCode`, `*http.Request`, and
 `*http.Response` values of the request, as well as the JSON of the error body
 (much like other response objects in the SDK).
 
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Agents.Get(context.TODO(), "abc123")
+_, err := client.Accounts.New(context.TODO(), samgo.AccountNewParams{
+	Name: samgo.F("New Account!"),
+})
 if err != nil {
-	var apierr *sam.Error
+	var apierr *samgo.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
+		println(apierr.Type)                       // missing_param
+		println(apierr.Title)                      // Missing param "name"
+		println(apierr.Detail)                     // Looks like "naem" may have been a typo?
+		println(apierr.Status)                     // 400
 	}
-	panic(err.Error()) // GET "/api/v1/agents/{id}": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/accounts": 400 Bad Request { ... }
 }
 ```
 
@@ -197,9 +231,11 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Agents.Get(
+client.Accounts.List(
 	ctx,
-	"abc123",
+	samgo.AccountListParams{
+		Status: samgo.F(samgo.AccountListParamsStatusOpen),
+	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
 )
@@ -215,8 +251,29 @@ The file name and content-type can be customized by implementing `Name() string`
 string` on the run-time type of `io.Reader`. Note that `os.File` implements `Name() string`, so a
 file returned by `os.Open` will be sent with the file name on disk.
 
-We also provide a helper `sam.FileParam(reader io.Reader, filename string, contentType string)`
+We also provide a helper `samgo.FileParam(reader io.Reader, filename string, contentType string)`
 which can be used to wrap any `io.Reader` with the appropriate file name and content type.
+
+```go
+// A file from the file system
+file, err := os.Open("my/file.txt")
+samgo.FileNewParams{
+	File:    samgo.F[io.Reader](file),
+	Purpose: samgo.F(samgo.FileNewParamsPurposeOther),
+}
+
+// A file from a string
+samgo.FileNewParams{
+	File:    samgo.F[io.Reader](strings.NewReader("my file contents")),
+	Purpose: samgo.F(samgo.FileNewParamsPurposeOther),
+}
+
+// With a custom filename and contentType
+samgo.FileNewParams{
+	File:    samgo.FileParam(strings.NewReader(`{"hello": "foo"}`), "file.go", "application/json"),
+	Purpose: samgo.F(samgo.FileNewParamsPurposeOther),
+}
+```
 
 ### Retries
 
@@ -228,14 +285,16 @@ You can use the `WithMaxRetries` option to configure or disable this:
 
 ```go
 // Configure the default for all requests:
-client := sam.NewClient(
+client := samgo.NewClient(
 	option.WithMaxRetries(0), // default is 2
 )
 
 // Override per-request:
-client.Agents.Get(
+client.Accounts.New(
 	context.TODO(),
-	"abc123",
+	samgo.AccountNewParams{
+		Name: samgo.F("Jack"),
+	},
 	option.WithMaxRetries(5),
 )
 ```
@@ -273,9 +332,9 @@ or the `option.WithJSONSet()` methods.
 
 ```go
 params := FooNewParams{
-    ID:   sam.F("id_xxxx"),
-    Data: sam.F(FooNewParamsData{
-        FirstName: sam.F("John"),
+    ID:   samgo.F("id_xxxx"),
+    Data: samgo.F(FooNewParamsData{
+        FirstName: samgo.F("John"),
     }),
 }
 client.Foo.New(context.Background(), params, option.WithJSONSet("data.last_name", "Doe"))
@@ -310,7 +369,7 @@ func Logger(req *http.Request, next option.MiddlewareNext) (res *http.Response, 
     return res, err
 }
 
-client := sam.NewClient(
+client := samgo.NewClient(
 	option.WithMiddleware(Logger),
 )
 ```

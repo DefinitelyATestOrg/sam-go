@@ -15,7 +15,7 @@ import (
 	"github.com/tidwall/sjson"
 )
 
-// RequestOption is an option for the requests made by the sam API Client
+// RequestOption is an option for the requests made by the increase API Client
 // which can be supplied to clients, services, and methods. You can read more about this functional
 // options pattern in our [README].
 //
@@ -225,13 +225,28 @@ func WithRequestTimeout(dur time.Duration) RequestOption {
 // environment to be the "production" environment. An environment specifies which base URL
 // to use by default.
 func WithEnvironmentProduction() RequestOption {
-	return WithBaseURL("http://localhost:8085//")
+	return WithBaseURL("https://api.increase.com/")
 }
 
-// WithAuthToken returns a RequestOption that sets the client setting "auth_token".
-func WithAuthToken(value string) RequestOption {
+// WithEnvironmentSandbox returns a RequestOption that sets the current
+// environment to be the "sandbox" environment. An environment specifies which base URL
+// to use by default.
+func WithEnvironmentSandbox() RequestOption {
+	return WithBaseURL("https://sandbox.increase.com/")
+}
+
+// WithAPIKey returns a RequestOption that sets the client setting "api_key".
+func WithAPIKey(value string) RequestOption {
 	return func(r *requestconfig.RequestConfig) error {
-		r.AuthToken = value
-		return r.Apply(WithHeader("authorization", fmt.Sprintf("Bearer %s", r.AuthToken)))
+		r.APIKey = value
+		return r.Apply(WithHeader("authorization", fmt.Sprintf("Bearer %s", r.APIKey)))
+	}
+}
+
+// WithWebhookSecret returns a RequestOption that sets the client setting "webhook_secret".
+func WithWebhookSecret(value string) RequestOption {
+	return func(r *requestconfig.RequestConfig) error {
+		r.WebhookSecret = value
+		return nil
 	}
 }

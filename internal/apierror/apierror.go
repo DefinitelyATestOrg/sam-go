@@ -14,6 +14,14 @@ import (
 // made and the API returns a response with a HTTP status code. Other errors are
 // not wrapped by this SDK.
 type Error struct {
+	Detail string `json:"detail,required,nullable"`
+	// All errors related to parsing the request parameters.
+	Errors []interface{} `json:"errors,required"`
+	ResourceID string      `json:"resource_id,required"`
+	Status     ErrorStatus `json:"status,required"`
+	Title      string      `json:"title,required"`
+	Type       ErrorType   `json:"type,required"`
+	RetryAfter int64     `json:"retry_after,nullable"`
 	JSON       errorJSON `json:"-"`
 	StatusCode int
 	Request    *http.Request
@@ -22,6 +30,13 @@ type Error struct {
 
 // errorJSON contains the JSON metadata for the struct [Error]
 type errorJSON struct {
+	Detail      apijson.Field
+	Errors      apijson.Field
+	ResourceID  apijson.Field
+	Status      apijson.Field
+	Title       apijson.Field
+	Type        apijson.Field
+	RetryAfter  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -50,4 +65,49 @@ func (r *Error) DumpRequest(body bool) []byte {
 func (r *Error) DumpResponse(body bool) []byte {
 	out, _ := httputil.DumpResponse(r.Response, body)
 	return out
+}
+
+type ErrorStatus int64
+
+const (
+	ErrorStatus429 ErrorStatus = 429
+	ErrorStatus403 ErrorStatus = 403
+	ErrorStatus404 ErrorStatus = 404
+	ErrorStatus400 ErrorStatus = 400
+	ErrorStatus409 ErrorStatus = 409
+	ErrorStatus401 ErrorStatus = 401
+	ErrorStatus500 ErrorStatus = 500
+)
+
+func (r ErrorStatus) IsKnown() bool {
+	switch r {
+	case ErrorStatus429, ErrorStatus403, ErrorStatus404, ErrorStatus400, ErrorStatus409, ErrorStatus401, ErrorStatus500:
+		return true
+	}
+	return false
+}
+
+type ErrorType string
+
+const (
+	ErrorTypeRateLimitedError               ErrorType = "rate_limited_error"
+	ErrorTypePrivateFeatureError            ErrorType = "private_feature_error"
+	ErrorTypeObjectNotFoundError            ErrorType = "object_not_found_error"
+	ErrorTypeMalformedRequestError          ErrorType = "malformed_request_error"
+	ErrorTypeInvalidParametersError         ErrorType = "invalid_parameters_error"
+	ErrorTypeInvalidOperationError          ErrorType = "invalid_operation_error"
+	ErrorTypeInvalidAPIKeyError             ErrorType = "invalid_api_key_error"
+	ErrorTypeInternalServerError            ErrorType = "internal_server_error"
+	ErrorTypeInsufficientPermissionsError   ErrorType = "insufficient_permissions_error"
+	ErrorTypeIdempotencyKeyAlreadyUsedError ErrorType = "idempotency_key_already_used_error"
+	ErrorTypeEnvironmentMismatchError       ErrorType = "environment_mismatch_error"
+	ErrorTypeAPIMethodNotFoundError         ErrorType = "api_method_not_found_error"
+)
+
+func (r ErrorType) IsKnown() bool {
+	switch r {
+	case ErrorTypeRateLimitedError, ErrorTypePrivateFeatureError, ErrorTypeObjectNotFoundError, ErrorTypeMalformedRequestError, ErrorTypeInvalidParametersError, ErrorTypeInvalidOperationError, ErrorTypeInvalidAPIKeyError, ErrorTypeInternalServerError, ErrorTypeInsufficientPermissionsError, ErrorTypeIdempotencyKeyAlreadyUsedError, ErrorTypeEnvironmentMismatchError, ErrorTypeAPIMethodNotFoundError:
+		return true
+	}
+	return false
 }

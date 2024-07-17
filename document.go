@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package sam
+package samgo
 
 import (
 	"context"
@@ -12,13 +12,14 @@ import (
 
 	"github.com/DefinitelyATestOrg/sam-go/v3/internal/apijson"
 	"github.com/DefinitelyATestOrg/sam-go/v3/internal/apiquery"
+	"github.com/DefinitelyATestOrg/sam-go/v3/internal/pagination"
 	"github.com/DefinitelyATestOrg/sam-go/v3/internal/param"
 	"github.com/DefinitelyATestOrg/sam-go/v3/internal/requestconfig"
 	"github.com/DefinitelyATestOrg/sam-go/v3/option"
 )
 
 // DocumentService contains methods and other services that help with interacting
-// with the sam API.
+// with the increase API.
 //
 // Note, unlike clients, this service does not read variables from the environment
 // automatically. You should not instantiate this service directly, and instead use
@@ -36,112 +37,197 @@ func NewDocumentService(opts ...option.RequestOption) (r *DocumentService) {
 	return
 }
 
-func (r *DocumentService) Get(ctx context.Context, docID string, query DocumentGetParams, opts ...option.RequestOption) (res *http.Response, err error) {
+// Retrieve a Document
+func (r *DocumentService) Get(ctx context.Context, documentID string, opts ...option.RequestOption) (res *Document, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
-	if docID == "" {
-		err = errors.New("missing required doc_id parameter")
+	if documentID == "" {
+		err = errors.New("missing required document_id parameter")
 		return
 	}
-	path := fmt.Sprintf("api/v1/document/%s", docID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	path := fmt.Sprintf("documents/%s", documentID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
 	return
 }
 
-func (r *DocumentService) Update(ctx context.Context, docID string, body DocumentUpdateParams, opts ...option.RequestOption) (res *http.Response, err error) {
-	opts = append(r.Options[:], opts...)
-	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
-	if docID == "" {
-		err = errors.New("missing required doc_id parameter")
-		return
+// List Documents
+func (r *DocumentService) List(ctx context.Context, query DocumentListParams, opts ...option.RequestOption) (res *pagination.Page[Document], err error) {
+	var raw *http.Response
+	opts = append(r.Options, opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
+	path := "documents"
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
 	}
-	path := fmt.Sprintf("api/v1/document/%s", docID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
-	return
-}
-
-func (r *DocumentService) Delete(ctx context.Context, docID string, opts ...option.RequestOption) (err error) {
-	opts = append(r.Options[:], opts...)
-	opts = append([]option.RequestOption{option.WithHeader("Accept", "")}, opts...)
-	if docID == "" {
-		err = errors.New("missing required doc_id parameter")
-		return
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
 	}
-	path := fmt.Sprintf("api/v1/document/%s", docID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, nil, opts...)
-	return
+	res.SetPageConfig(cfg, raw)
+	return res, nil
 }
 
-type DocumentGetParams struct {
-	Text param.Field[bool] `query:"text"`
+// List Documents
+func (r *DocumentService) ListAutoPaging(ctx context.Context, query DocumentListParams, opts ...option.RequestOption) *pagination.PageAutoPager[Document] {
+	return pagination.NewPageAutoPager(r.List(ctx, query, opts...))
 }
 
-// URLQuery serializes [DocumentGetParams]'s query parameters as `url.Values`.
-func (r DocumentGetParams) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatBrackets,
-	})
+// Increase generates certain documents / forms automatically for your application;
+// they can be listed here. Currently the only supported document type is IRS Form
+// 1099-INT.
+type Document struct {
+	// The Document identifier.
+	ID string `json:"id,required"`
+	// The type of document.
+	Category DocumentCategory `json:"category,required"`
+	// The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the
+	// Document was created.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The identifier of the Entity the document was generated for.
+	EntityID string `json:"entity_id,required,nullable"`
+	// The identifier of the File containing the Document's contents.
+	FileID string `json:"file_id,required"`
+	// A constant representing the object's type. For this resource it will always be
+	// `document`.
+	Type DocumentType `json:"type,required"`
+	JSON documentJSON `json:"-"`
 }
 
-type DocumentUpdateParams struct {
-	ID                param.Field[string]                           `json:"id"`
-	CorpusPolicy      param.Field[DocumentUpdateParamsCorpusPolicy] `json:"corpusPolicy"`
-	CreatedBy         param.Field[DocumentUpdateParamsCreatedBy]    `json:"createdBy"`
-	ExternalLookupKey param.Field[string]                           `json:"externalLookupKey"`
-	LanguageCode      param.Field[DocumentUpdateParamsLanguageCode] `json:"languageCode"`
-	ProcessingVersion param.Field[int64]                            `json:"processingVersion"`
-	SourceAuthor      param.Field[string]                           `json:"sourceAuthor"`
-	SourceCreatedAt   param.Field[time.Time]                        `json:"sourceCreatedAt" format:"date-time"`
-	SourceUpdatedAt   param.Field[time.Time]                        `json:"sourceUpdatedAt" format:"date-time"`
-	SourceURL         param.Field[string]                           `json:"sourceUrl"`
-	Text              param.Field[string]                           `json:"text"`
-	Title             param.Field[string]                           `json:"title"`
-	UpdatedBy         param.Field[DocumentUpdateParamsUpdatedBy]    `json:"updatedBy"`
+// documentJSON contains the JSON metadata for the struct [Document]
+type documentJSON struct {
+	ID          apijson.Field
+	Category    apijson.Field
+	CreatedAt   apijson.Field
+	EntityID    apijson.Field
+	FileID      apijson.Field
+	Type        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
 }
 
-func (r DocumentUpdateParams) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
+func (r *Document) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
 }
 
-type DocumentUpdateParamsCorpusPolicy string
+func (r documentJSON) RawJSON() string {
+	return r.raw
+}
+
+// The type of document.
+type DocumentCategory string
 
 const (
-	DocumentUpdateParamsCorpusPolicyInclude       DocumentUpdateParamsCorpusPolicy = "INCLUDE"
-	DocumentUpdateParamsCorpusPolicyExcludeAlways DocumentUpdateParamsCorpusPolicy = "EXCLUDE_ALWAYS"
+	// Internal Revenue Service Form 1099-INT.
+	DocumentCategoryForm1099Int DocumentCategory = "form_1099_int"
+	// A document submitted in response to a proof of authorization request for an ACH
+	// transfer.
+	DocumentCategoryProofOfAuthorization DocumentCategory = "proof_of_authorization"
+	// Company information, such a policies or procedures, typically submitted during
+	// our due diligence process.
+	DocumentCategoryCompanyInformation DocumentCategory = "company_information"
 )
 
-func (r DocumentUpdateParamsCorpusPolicy) IsKnown() bool {
+func (r DocumentCategory) IsKnown() bool {
 	switch r {
-	case DocumentUpdateParamsCorpusPolicyInclude, DocumentUpdateParamsCorpusPolicyExcludeAlways:
+	case DocumentCategoryForm1099Int, DocumentCategoryProofOfAuthorization, DocumentCategoryCompanyInformation:
 		return true
 	}
 	return false
 }
 
-type DocumentUpdateParamsCreatedBy struct {
-	ID   param.Field[string] `json:"id"`
-	Name param.Field[string] `json:"name"`
+// A constant representing the object's type. For this resource it will always be
+// `document`.
+type DocumentType string
+
+const (
+	DocumentTypeDocument DocumentType = "document"
+)
+
+func (r DocumentType) IsKnown() bool {
+	switch r {
+	case DocumentTypeDocument:
+		return true
+	}
+	return false
 }
 
-func (r DocumentUpdateParamsCreatedBy) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
+type DocumentListParams struct {
+	Category  param.Field[DocumentListParamsCategory]  `query:"category"`
+	CreatedAt param.Field[DocumentListParamsCreatedAt] `query:"created_at"`
+	// Return the page of entries after this one.
+	Cursor param.Field[string] `query:"cursor"`
+	// Filter Documents to ones belonging to the specified Entity.
+	EntityID param.Field[string] `query:"entity_id"`
+	// Limit the size of the list that is returned. The default (and maximum) is 100
+	// objects.
+	Limit param.Field[int64] `query:"limit"`
 }
 
-type DocumentUpdateParamsLanguageCode struct {
-	Code     param.Field[string] `json:"code"`
-	Detected param.Field[bool]   `json:"detected"`
+// URLQuery serializes [DocumentListParams]'s query parameters as `url.Values`.
+func (r DocumentListParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
-func (r DocumentUpdateParamsLanguageCode) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
+type DocumentListParamsCategory struct {
+	// Filter Documents for those with the specified category or categories. For GET
+	// requests, this should be encoded as a comma-delimited string, such as
+	// `?in=one,two,three`.
+	In param.Field[[]DocumentListParamsCategoryIn] `query:"in"`
 }
 
-type DocumentUpdateParamsUpdatedBy struct {
-	ID   param.Field[string] `json:"id"`
-	Name param.Field[string] `json:"name"`
+// URLQuery serializes [DocumentListParamsCategory]'s query parameters as
+// `url.Values`.
+func (r DocumentListParamsCategory) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }
 
-func (r DocumentUpdateParamsUpdatedBy) MarshalJSON() (data []byte, err error) {
-	return apijson.MarshalRoot(r)
+type DocumentListParamsCategoryIn string
+
+const (
+	// Internal Revenue Service Form 1099-INT.
+	DocumentListParamsCategoryInForm1099Int DocumentListParamsCategoryIn = "form_1099_int"
+	// A document submitted in response to a proof of authorization request for an ACH
+	// transfer.
+	DocumentListParamsCategoryInProofOfAuthorization DocumentListParamsCategoryIn = "proof_of_authorization"
+	// Company information, such a policies or procedures, typically submitted during
+	// our due diligence process.
+	DocumentListParamsCategoryInCompanyInformation DocumentListParamsCategoryIn = "company_information"
+)
+
+func (r DocumentListParamsCategoryIn) IsKnown() bool {
+	switch r {
+	case DocumentListParamsCategoryInForm1099Int, DocumentListParamsCategoryInProofOfAuthorization, DocumentListParamsCategoryInCompanyInformation:
+		return true
+	}
+	return false
+}
+
+type DocumentListParamsCreatedAt struct {
+	// Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	After param.Field[time.Time] `query:"after" format:"date-time"`
+	// Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	// timestamp.
+	Before param.Field[time.Time] `query:"before" format:"date-time"`
+	// Return results on or after this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrAfter param.Field[time.Time] `query:"on_or_after" format:"date-time"`
+	// Return results on or before this
+	// [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+	OnOrBefore param.Field[time.Time] `query:"on_or_before" format:"date-time"`
+}
+
+// URLQuery serializes [DocumentListParamsCreatedAt]'s query parameters as
+// `url.Values`.
+func (r DocumentListParamsCreatedAt) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
 }

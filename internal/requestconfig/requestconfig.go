@@ -21,11 +21,12 @@ import (
 	"github.com/DefinitelyATestOrg/sam-go/v3/internal/apierror"
 	"github.com/DefinitelyATestOrg/sam-go/v3/internal/apiform"
 	"github.com/DefinitelyATestOrg/sam-go/v3/internal/apiquery"
+	"github.com/google/uuid"
 )
 
 func getDefaultHeaders() map[string]string {
 	return map[string]string{
-		"User-Agent": fmt.Sprintf("Sam/Go %s", internal.PackageVersion),
+		"User-Agent": fmt.Sprintf("Increase/Go %s", internal.PackageVersion),
 	}
 }
 
@@ -135,7 +136,10 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 	if reader != nil {
 		req.Header.Set("Content-Type", contentType)
 	}
-
+	if method != http.MethodGet {
+		// Note this can be overridden with `WithHeader("Idempotency-Key", myIdempotencyKey)`
+		req.Header.Set("Idempotency-Key", "stainless-go-"+uuid.New().String())
+	}
 	req.Header.Set("Accept", "application/json")
 	for k, v := range getDefaultHeaders() {
 		req.Header.Add(k, v)
@@ -171,7 +175,8 @@ type RequestConfig struct {
 	BaseURL        *url.URL
 	HTTPClient     *http.Client
 	Middlewares    []middleware
-	AuthToken      string
+	APIKey         string
+	WebhookSecret  string
 	// If ResponseBodyInto not nil, then we will attempt to deserialize into
 	// ResponseBodyInto. If Destination is a []byte, then it will return the body as
 	// is.
@@ -470,7 +475,7 @@ func (cfg *RequestConfig) Clone(ctx context.Context) *RequestConfig {
 		Request:    req,
 		HTTPClient: cfg.HTTPClient,
 	}
-
+	new.Request.Header.Set("Idempotency-Key", "stainless-go-"+uuid.New().String())
 	return new
 }
 
