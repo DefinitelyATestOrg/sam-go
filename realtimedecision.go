@@ -9,10 +9,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/DefinitelyATestOrg/sam-go/v3/internal/apijson"
-	"github.com/DefinitelyATestOrg/sam-go/v3/internal/param"
-	"github.com/DefinitelyATestOrg/sam-go/v3/internal/requestconfig"
-	"github.com/DefinitelyATestOrg/sam-go/v3/option"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apijson"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal/param"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal/requestconfig"
+	"github.com/DefinitelyATestOrg/sam-go/v2/option"
 )
 
 // RealTimeDecisionService contains methods and other services that help with

@@ -5,9 +5,9 @@ package pagination
 import (
 	"net/http"
 
-	"github.com/DefinitelyATestOrg/sam-go/v3/internal/apijson"
-	"github.com/DefinitelyATestOrg/sam-go/v3/internal/requestconfig"
-	"github.com/DefinitelyATestOrg/sam-go/v3/option"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apijson"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal/requestconfig"
+	"github.com/DefinitelyATestOrg/sam-go/v2/option"
 )
 
 type Page[T any] struct {

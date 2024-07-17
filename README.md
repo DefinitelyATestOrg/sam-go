@@ -1,6 +1,6 @@
 # Increase Go API Library
 
-<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3"><img src="https://pkg.go.dev/badge/github.com/DefinitelyATestOrg/sam-go/v3.svg" alt="Go Reference"></a>
+<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2"><img src="https://pkg.go.dev/badge/github.com/DefinitelyATestOrg/sam-go/v2.svg" alt="Go Reference"></a>
 
 The Increase Go library provides convenient access to [the Increase REST
 API](https://increase.com/documentation) from applications written in Go. The full API of this library can be found in [api.md](api.md).
@@ -11,7 +11,7 @@ API](https://increase.com/documentation) from applications written in Go. The fu
 
 ```go
 import (
-	"github.com/DefinitelyATestOrg/sam-go/v3" // imported as samgo
+	"github.com/DefinitelyATestOrg/sam-go/v2" // imported as samgo
 )
 ```
 
@@ -22,7 +22,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/DefinitelyATestOrg/sam-go/v3@v3.0.0-beta.2'
+go get -u 'github.com/DefinitelyATestOrg/sam-go/v2@v2.0.0-beta.1'
 ```
 
 <!-- x-release-please-end -->
@@ -42,8 +42,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/DefinitelyATestOrg/sam-go/v3"
-	"github.com/DefinitelyATestOrg/sam-go/v3/option"
+	"github.com/DefinitelyATestOrg/sam-go/v2"
+	"github.com/DefinitelyATestOrg/sam-go/v2/option"
 )
 
 func main() {
@@ -154,7 +154,7 @@ client.Accounts.New(context.TODO(), ...,
 )
 ```
 
-See the [full list of request options](https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v3/option).
+See the [full list of request options](https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2/option).
 
 ### Pagination
 

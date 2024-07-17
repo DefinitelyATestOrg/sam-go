@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/DefinitelyATestOrg/sam-go/v3/internal/requestconfig"
-	"github.com/DefinitelyATestOrg/sam-go/v3/option"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal/requestconfig"
+	"github.com/DefinitelyATestOrg/sam-go/v2/option"
 )
 
 // SimulationAccountTransferService contains methods and other services that help

@@ -3,7 +3,7 @@
 package samgo
 
 import (
-	"github.com/DefinitelyATestOrg/sam-go/v3/option"
+	"github.com/DefinitelyATestOrg/sam-go/v2/option"
 )
 
 // IntrafiService contains methods and other services that help with interacting
