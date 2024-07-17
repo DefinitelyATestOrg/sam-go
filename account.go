@@ -116,8 +116,8 @@ func (r *AccountService) Close(ctx context.Context, accountID string, opts ...op
 	return
 }
 
-// Accounts are your bank accounts with Increase. They store money, receive
-// transfers, and send payments. They earn interest and have depository insurance.
+// Accounts are your accounts with Increase. They store money, receive transfers,
+// and send payments. They earn interest and have depository insurance.
 type Account struct {
 	// The Account identifier.
 	ID string `json:"id,required"`
