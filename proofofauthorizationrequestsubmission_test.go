@@ -83,10 +83,10 @@ func TestProofOfAuthorizationRequestSubmissionListWithOptionalParams(t *testing.
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ProofOfAuthorizationRequestSubmissions.List(context.TODO(), samgo.ProofOfAuthorizationRequestSubmissionListParams{
-		Cursor:                        samgo.F("string"),
+		Cursor:                        samgo.F("cursor"),
 		IdempotencyKey:                samgo.F("x"),
 		Limit:                         samgo.F(int64(1)),
-		ProofOfAuthorizationRequestID: samgo.F("string"),
+		ProofOfAuthorizationRequestID: samgo.F("proof_of_authorization_request_id"),
 	})
 	if err != nil {
 		var apierr *samgo.Error

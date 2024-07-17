@@ -49,7 +49,7 @@ func TestPendingTransactionListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PendingTransactions.List(context.TODO(), samgo.PendingTransactionListParams{
-		AccountID: samgo.F("string"),
+		AccountID: samgo.F("account_id"),
 		Category: samgo.F(samgo.PendingTransactionListParamsCategory{
 			In: samgo.F([]samgo.PendingTransactionListParamsCategoryIn{samgo.PendingTransactionListParamsCategoryInAccountTransferInstruction, samgo.PendingTransactionListParamsCategoryInACHTransferInstruction, samgo.PendingTransactionListParamsCategoryInCardAuthorization}),
 		}),
@@ -59,10 +59,10 @@ func TestPendingTransactionListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor:   samgo.F("string"),
+		Cursor:   samgo.F("cursor"),
 		Limit:    samgo.F(int64(1)),
-		RouteID:  samgo.F("string"),
-		SourceID: samgo.F("string"),
+		RouteID:  samgo.F("route_id"),
+		SourceID: samgo.F("source_id"),
 		Status: samgo.F(samgo.PendingTransactionListParamsStatus{
 			In: samgo.F([]samgo.PendingTransactionListParamsStatusIn{samgo.PendingTransactionListParamsStatusInPending, samgo.PendingTransactionListParamsStatusInComplete}),
 		}),

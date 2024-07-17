@@ -35,7 +35,7 @@ func TestWireTransferNewWithOptionalParams(t *testing.T) {
 		BeneficiaryAddressLine1: samgo.F("33 Liberty Street"),
 		BeneficiaryAddressLine2: samgo.F("New York"),
 		BeneficiaryAddressLine3: samgo.F("NY 10045"),
-		ExternalAccountID:       samgo.F("string"),
+		ExternalAccountID:       samgo.F("external_account_id"),
 		OriginatorAddressLine1:  samgo.F("x"),
 		OriginatorAddressLine2:  samgo.F("x"),
 		OriginatorAddressLine3:  samgo.F("x"),
@@ -87,15 +87,15 @@ func TestWireTransferListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireTransfers.List(context.TODO(), samgo.WireTransferListParams{
-		AccountID: samgo.F("string"),
+		AccountID: samgo.F("account_id"),
 		CreatedAt: samgo.F(samgo.WireTransferListParamsCreatedAt{
 			After:      samgo.F(time.Now()),
 			Before:     samgo.F(time.Now()),
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor:            samgo.F("string"),
-		ExternalAccountID: samgo.F("string"),
+		Cursor:            samgo.F("cursor"),
+		ExternalAccountID: samgo.F("external_account_id"),
 		IdempotencyKey:    samgo.F("x"),
 		Limit:             samgo.F(int64(1)),
 	})

@@ -80,7 +80,7 @@ func TestCardDisputeListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor:         samgo.F("string"),
+		Cursor:         samgo.F("cursor"),
 		IdempotencyKey: samgo.F("x"),
 		Limit:          samgo.F(int64(1)),
 		Status: samgo.F(samgo.CardDisputeListParamsStatus{

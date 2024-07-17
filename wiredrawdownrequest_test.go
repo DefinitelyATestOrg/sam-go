@@ -85,7 +85,7 @@ func TestWireDrawdownRequestListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.WireDrawdownRequests.List(context.TODO(), samgo.WireDrawdownRequestListParams{
-		Cursor:         samgo.F("string"),
+		Cursor:         samgo.F("cursor"),
 		IdempotencyKey: samgo.F("x"),
 		Limit:          samgo.F(int64(1)),
 		Status:         samgo.F(samgo.WireDrawdownRequestListParamsStatusPendingSubmission),

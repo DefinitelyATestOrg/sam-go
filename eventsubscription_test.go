@@ -27,7 +27,7 @@ func TestEventSubscriptionNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.EventSubscriptions.New(context.TODO(), samgo.EventSubscriptionNewParams{
 		URL:                   samgo.F("https://website.com/webhooks"),
-		OAuthConnectionID:     samgo.F("string"),
+		OAuthConnectionID:     samgo.F("oauth_connection_id"),
 		SelectedEventCategory: samgo.F(samgo.EventSubscriptionNewParamsSelectedEventCategoryAccountCreated),
 		SharedSecret:          samgo.F("x"),
 	})
@@ -103,7 +103,7 @@ func TestEventSubscriptionListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.EventSubscriptions.List(context.TODO(), samgo.EventSubscriptionListParams{
-		Cursor:         samgo.F("string"),
+		Cursor:         samgo.F("cursor"),
 		IdempotencyKey: samgo.F("x"),
 		Limit:          samgo.F(int64(1)),
 	})

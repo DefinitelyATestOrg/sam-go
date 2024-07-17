@@ -61,7 +61,7 @@ func TestACHTransferNewWithOptionalParams(t *testing.T) {
 		CompanyName:              samgo.F("x"),
 		DestinationAccountHolder: samgo.F(samgo.ACHTransferNewParamsDestinationAccountHolderBusiness),
 		EffectiveDate:            samgo.F(time.Now()),
-		ExternalAccountID:        samgo.F("string"),
+		ExternalAccountID:        samgo.F("external_account_id"),
 		Funding:                  samgo.F(samgo.ACHTransferNewParamsFundingChecking),
 		IndividualID:             samgo.F("x"),
 		IndividualName:           samgo.F("x"),
@@ -117,15 +117,15 @@ func TestACHTransferListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.ACHTransfers.List(context.TODO(), samgo.ACHTransferListParams{
-		AccountID: samgo.F("string"),
+		AccountID: samgo.F("account_id"),
 		CreatedAt: samgo.F(samgo.ACHTransferListParamsCreatedAt{
 			After:      samgo.F(time.Now()),
 			Before:     samgo.F(time.Now()),
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor:            samgo.F("string"),
-		ExternalAccountID: samgo.F("string"),
+		Cursor:            samgo.F("cursor"),
+		ExternalAccountID: samgo.F("external_account_id"),
 		IdempotencyKey:    samgo.F("x"),
 		Limit:             samgo.F(int64(1)),
 	})

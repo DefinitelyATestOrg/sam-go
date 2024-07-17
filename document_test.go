@@ -58,8 +58,8 @@ func TestDocumentListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor:   samgo.F("string"),
-		EntityID: samgo.F("string"),
+		Cursor:   samgo.F("cursor"),
+		EntityID: samgo.F("entity_id"),
 		Limit:    samgo.F(int64(1)),
 	})
 	if err != nil {

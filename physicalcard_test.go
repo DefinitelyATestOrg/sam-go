@@ -45,7 +45,7 @@ func TestPhysicalCardNewWithOptionalParams(t *testing.T) {
 			}),
 			Method: samgo.F(samgo.PhysicalCardNewParamsShipmentMethodUsps),
 		}),
-		PhysicalCardProfileID: samgo.F("string"),
+		PhysicalCardProfileID: samgo.F("physical_card_profile_id"),
 	})
 	if err != nil {
 		var apierr *samgo.Error
@@ -119,14 +119,14 @@ func TestPhysicalCardListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PhysicalCards.List(context.TODO(), samgo.PhysicalCardListParams{
-		CardID: samgo.F("string"),
+		CardID: samgo.F("card_id"),
 		CreatedAt: samgo.F(samgo.PhysicalCardListParamsCreatedAt{
 			After:      samgo.F(time.Now()),
 			Before:     samgo.F(time.Now()),
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor:         samgo.F("string"),
+		Cursor:         samgo.F("cursor"),
 		IdempotencyKey: samgo.F("x"),
 		Limit:          samgo.F(int64(1)),
 	})

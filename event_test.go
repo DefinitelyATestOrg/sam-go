@@ -49,7 +49,7 @@ func TestEventListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Events.List(context.TODO(), samgo.EventListParams{
-		AssociatedObjectID: samgo.F("string"),
+		AssociatedObjectID: samgo.F("associated_object_id"),
 		Category: samgo.F(samgo.EventListParamsCategory{
 			In: samgo.F([]samgo.EventListParamsCategoryIn{samgo.EventListParamsCategoryInAccountCreated, samgo.EventListParamsCategoryInAccountUpdated, samgo.EventListParamsCategoryInAccountNumberCreated}),
 		}),
@@ -59,7 +59,7 @@ func TestEventListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor: samgo.F("string"),
+		Cursor: samgo.F("cursor"),
 		Limit:  samgo.F(int64(1)),
 	})
 	if err != nil {

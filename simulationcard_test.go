@@ -28,14 +28,14 @@ func TestSimulationCardAuthorizeWithOptionalParams(t *testing.T) {
 	_, err := client.Simulations.Cards.Authorize(context.TODO(), samgo.SimulationCardAuthorizeParams{
 		Amount:               samgo.F(int64(1000)),
 		CardID:               samgo.F("card_oubs0hwk5rn6knuecxg2"),
-		DigitalWalletTokenID: samgo.F("string"),
+		DigitalWalletTokenID: samgo.F("digital_wallet_token_id"),
 		EventSubscriptionID:  samgo.F("event_subscription_001dzz0r20rcdxgb013zqb8m04g"),
 		MerchantAcceptorID:   samgo.F("5665270011000168"),
 		MerchantCategoryCode: samgo.F("5734"),
 		MerchantCity:         samgo.F("New York"),
 		MerchantCountry:      samgo.F("US"),
 		MerchantDescriptor:   samgo.F("AMAZON.COM"),
-		PhysicalCardID:       samgo.F("string"),
+		PhysicalCardID:       samgo.F("physical_card_id"),
 	})
 	if err != nil {
 		var apierr *samgo.Error

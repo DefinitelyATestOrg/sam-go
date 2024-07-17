@@ -29,7 +29,7 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 	_, err := client.Exports.New(context.TODO(), samgo.ExportNewParams{
 		Category: samgo.F(samgo.ExportNewParamsCategoryTransactionCsv),
 		AccountStatementOfx: samgo.F(samgo.ExportNewParamsAccountStatementOfx{
-			AccountID: samgo.F("string"),
+			AccountID: samgo.F("account_id"),
 			CreatedAt: samgo.F(samgo.ExportNewParamsAccountStatementOfxCreatedAt{
 				After:      samgo.F(time.Now()),
 				Before:     samgo.F(time.Now()),
@@ -38,7 +38,7 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 			}),
 		}),
 		BalanceCsv: samgo.F(samgo.ExportNewParamsBalanceCsv{
-			AccountID: samgo.F("string"),
+			AccountID: samgo.F("account_id"),
 			CreatedAt: samgo.F(samgo.ExportNewParamsBalanceCsvCreatedAt{
 				After:      samgo.F(time.Now()),
 				Before:     samgo.F(time.Now()),
@@ -47,7 +47,7 @@ func TestExportNewWithOptionalParams(t *testing.T) {
 			}),
 		}),
 		BookkeepingAccountBalanceCsv: samgo.F(samgo.ExportNewParamsBookkeepingAccountBalanceCsv{
-			BookkeepingAccountID: samgo.F("string"),
+			BookkeepingAccountID: samgo.F("bookkeeping_account_id"),
 			CreatedAt: samgo.F(samgo.ExportNewParamsBookkeepingAccountBalanceCsvCreatedAt{
 				After:      samgo.F(time.Now()),
 				Before:     samgo.F(time.Now()),
@@ -124,7 +124,7 @@ func TestExportListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor:         samgo.F("string"),
+		Cursor:         samgo.F("cursor"),
 		IdempotencyKey: samgo.F("x"),
 		Limit:          samgo.F(int64(1)),
 		Status: samgo.F(samgo.ExportListParamsStatus{

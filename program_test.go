@@ -48,7 +48,7 @@ func TestProgramListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Programs.List(context.TODO(), samgo.ProgramListParams{
-		Cursor: samgo.F("string"),
+		Cursor: samgo.F("cursor"),
 		Limit:  samgo.F(int64(1)),
 	})
 	if err != nil {

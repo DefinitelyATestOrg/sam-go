@@ -34,7 +34,7 @@ func TestRealTimePaymentsTransferNewWithOptionalParams(t *testing.T) {
 		DebtorName:               samgo.F("x"),
 		DestinationAccountNumber: samgo.F("987654321"),
 		DestinationRoutingNumber: samgo.F("101050001"),
-		ExternalAccountID:        samgo.F("string"),
+		ExternalAccountID:        samgo.F("external_account_id"),
 		RequireApproval:          samgo.F(true),
 		UltimateCreditorName:     samgo.F("x"),
 		UltimateDebtorName:       samgo.F("x"),
@@ -83,15 +83,15 @@ func TestRealTimePaymentsTransferListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.RealTimePaymentsTransfers.List(context.TODO(), samgo.RealTimePaymentsTransferListParams{
-		AccountID: samgo.F("string"),
+		AccountID: samgo.F("account_id"),
 		CreatedAt: samgo.F(samgo.RealTimePaymentsTransferListParamsCreatedAt{
 			After:      samgo.F(time.Now()),
 			Before:     samgo.F(time.Now()),
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor:            samgo.F("string"),
-		ExternalAccountID: samgo.F("string"),
+		Cursor:            samgo.F("cursor"),
+		ExternalAccountID: samgo.F("external_account_id"),
 		IdempotencyKey:    samgo.F("x"),
 		Limit:             samgo.F(int64(1)),
 	})

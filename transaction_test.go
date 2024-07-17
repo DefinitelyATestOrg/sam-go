@@ -49,7 +49,7 @@ func TestTransactionListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Transactions.List(context.TODO(), samgo.TransactionListParams{
-		AccountID: samgo.F("string"),
+		AccountID: samgo.F("account_id"),
 		Category: samgo.F(samgo.TransactionListParamsCategory{
 			In: samgo.F([]samgo.TransactionListParamsCategoryIn{samgo.TransactionListParamsCategoryInAccountTransferIntention, samgo.TransactionListParamsCategoryInACHTransferIntention, samgo.TransactionListParamsCategoryInACHTransferRejection}),
 		}),
@@ -59,9 +59,9 @@ func TestTransactionListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor:  samgo.F("string"),
+		Cursor:  samgo.F("cursor"),
 		Limit:   samgo.F(int64(1)),
-		RouteID: samgo.F("string"),
+		RouteID: samgo.F("route_id"),
 	})
 	if err != nil {
 		var apierr *samgo.Error

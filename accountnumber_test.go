@@ -115,7 +115,7 @@ func TestAccountNumberListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.AccountNumbers.List(context.TODO(), samgo.AccountNumberListParams{
-		AccountID:      samgo.F("string"),
+		AccountID:      samgo.F("account_id"),
 		ACHDebitStatus: samgo.F(samgo.AccountNumberListParamsACHDebitStatusAllowed),
 		CreatedAt: samgo.F(samgo.AccountNumberListParamsCreatedAt{
 			After:      samgo.F(time.Now()),
@@ -123,7 +123,7 @@ func TestAccountNumberListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor:         samgo.F("string"),
+		Cursor:         samgo.F("cursor"),
 		IdempotencyKey: samgo.F("x"),
 		Limit:          samgo.F(int64(1)),
 		Status:         samgo.F(samgo.AccountNumberListParamsStatusActive),

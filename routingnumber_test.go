@@ -27,7 +27,7 @@ func TestRoutingNumberListWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.RoutingNumbers.List(context.TODO(), samgo.RoutingNumberListParams{
 		RoutingNumber: samgo.F("xxxxxxxxx"),
-		Cursor:        samgo.F("string"),
+		Cursor:        samgo.F("cursor"),
 		Limit:         samgo.F(int64(1)),
 	})
 	if err != nil {

@@ -84,7 +84,7 @@ func TestDigitalCardProfileListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DigitalCardProfiles.List(context.TODO(), samgo.DigitalCardProfileListParams{
-		Cursor:         samgo.F("string"),
+		Cursor:         samgo.F("cursor"),
 		IdempotencyKey: samgo.F("x"),
 		Limit:          samgo.F(int64(1)),
 		Status: samgo.F(samgo.DigitalCardProfileListParamsStatus{
@@ -138,12 +138,12 @@ func TestDigitalCardProfileCloneWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"digital_card_profile_s3puplu90f04xhcwkiga",
 		samgo.DigitalCardProfileCloneParams{
-			AppIconFileID:         samgo.F("string"),
+			AppIconFileID:         samgo.F("app_icon_file_id"),
 			BackgroundImageFileID: samgo.F("file_1ai913suu1zfn1pdetru"),
 			CardDescription:       samgo.F("x"),
 			ContactEmail:          samgo.F("x"),
 			ContactPhone:          samgo.F("x"),
-			ContactWebsite:        samgo.F("string"),
+			ContactWebsite:        samgo.F("contact_website"),
 			Description:           samgo.F("x"),
 			IssuerName:            samgo.F("x"),
 			TextColor: samgo.F(samgo.DigitalCardProfileCloneParamsTextColor{

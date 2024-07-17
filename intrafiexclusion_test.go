@@ -73,8 +73,8 @@ func TestIntrafiExclusionListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Intrafi.Exclusions.List(context.TODO(), samgo.IntrafiExclusionListParams{
-		Cursor:         samgo.F("string"),
-		EntityID:       samgo.F("string"),
+		Cursor:         samgo.F("cursor"),
+		EntityID:       samgo.F("entity_id"),
 		IdempotencyKey: samgo.F("x"),
 		Limit:          samgo.F(int64(1)),
 	})

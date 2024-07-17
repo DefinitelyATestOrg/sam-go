@@ -49,15 +49,15 @@ func TestCardPaymentListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CardPayments.List(context.TODO(), samgo.CardPaymentListParams{
-		AccountID: samgo.F("string"),
-		CardID:    samgo.F("string"),
+		AccountID: samgo.F("account_id"),
+		CardID:    samgo.F("card_id"),
 		CreatedAt: samgo.F(samgo.CardPaymentListParamsCreatedAt{
 			After:      samgo.F(time.Now()),
 			Before:     samgo.F(time.Now()),
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor: samgo.F("string"),
+		Cursor: samgo.F("cursor"),
 		Limit:  samgo.F(int64(1)),
 	})
 	if err != nil {

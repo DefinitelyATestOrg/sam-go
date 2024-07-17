@@ -37,11 +37,11 @@ func TestCardNewWithOptionalParams(t *testing.T) {
 		}),
 		Description: samgo.F("Card for Ian Crease"),
 		DigitalWallet: samgo.F(samgo.CardNewParamsDigitalWallet{
-			DigitalCardProfileID: samgo.F("string"),
+			DigitalCardProfileID: samgo.F("digital_card_profile_id"),
 			Email:                samgo.F("x"),
 			Phone:                samgo.F("x"),
 		}),
-		EntityID: samgo.F("string"),
+		EntityID: samgo.F("entity_id"),
 	})
 	if err != nil {
 		var apierr *samgo.Error
@@ -99,11 +99,11 @@ func TestCardUpdateWithOptionalParams(t *testing.T) {
 			}),
 			Description: samgo.F("New description"),
 			DigitalWallet: samgo.F(samgo.CardUpdateParamsDigitalWallet{
-				DigitalCardProfileID: samgo.F("string"),
+				DigitalCardProfileID: samgo.F("digital_card_profile_id"),
 				Email:                samgo.F("x"),
 				Phone:                samgo.F("x"),
 			}),
-			EntityID: samgo.F("string"),
+			EntityID: samgo.F("entity_id"),
 			Status:   samgo.F(samgo.CardUpdateParamsStatusActive),
 		},
 	)
@@ -129,14 +129,14 @@ func TestCardListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Cards.List(context.TODO(), samgo.CardListParams{
-		AccountID: samgo.F("string"),
+		AccountID: samgo.F("account_id"),
 		CreatedAt: samgo.F(samgo.CardListParamsCreatedAt{
 			After:      samgo.F(time.Now()),
 			Before:     samgo.F(time.Now()),
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor:         samgo.F("string"),
+		Cursor:         samgo.F("cursor"),
 		IdempotencyKey: samgo.F("x"),
 		Limit:          samgo.F(int64(1)),
 	})

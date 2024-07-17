@@ -49,8 +49,8 @@ func TestAccountStatementListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.AccountStatements.List(context.TODO(), samgo.AccountStatementListParams{
-		AccountID: samgo.F("string"),
-		Cursor:    samgo.F("string"),
+		AccountID: samgo.F("account_id"),
+		Cursor:    samgo.F("cursor"),
 		Limit:     samgo.F(int64(1)),
 		StatementPeriodStart: samgo.F(samgo.AccountStatementListParamsStatementPeriodStart{
 			After:      samgo.F(time.Now()),

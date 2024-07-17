@@ -29,7 +29,7 @@ func TestAccountNewWithOptionalParams(t *testing.T) {
 	_, err := client.Accounts.New(context.TODO(), samgo.AccountNewParams{
 		Name:                  samgo.F("New Account!"),
 		EntityID:              samgo.F("entity_n8y8tnk2p9339ti393yi"),
-		InformationalEntityID: samgo.F("string"),
+		InformationalEntityID: samgo.F("informational_entity_id"),
 		ProgramID:             samgo.F("program_i2v2os4mwza1oetokh9i"),
 	})
 	if err != nil {
@@ -110,10 +110,10 @@ func TestAccountListWithOptionalParams(t *testing.T) {
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor:                samgo.F("string"),
-		EntityID:              samgo.F("string"),
+		Cursor:                samgo.F("cursor"),
+		EntityID:              samgo.F("entity_id"),
 		IdempotencyKey:        samgo.F("x"),
-		InformationalEntityID: samgo.F("string"),
+		InformationalEntityID: samgo.F("informational_entity_id"),
 		Limit:                 samgo.F(int64(1)),
 		Status:                samgo.F(samgo.AccountListParamsStatusOpen),
 	})

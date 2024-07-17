@@ -49,14 +49,14 @@ func TestCardPurchaseSupplementListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.CardPurchaseSupplements.List(context.TODO(), samgo.CardPurchaseSupplementListParams{
-		CardPaymentID: samgo.F("string"),
+		CardPaymentID: samgo.F("card_payment_id"),
 		CreatedAt: samgo.F(samgo.CardPurchaseSupplementListParamsCreatedAt{
 			After:      samgo.F(time.Now()),
 			Before:     samgo.F(time.Now()),
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor: samgo.F("string"),
+		Cursor: samgo.F("cursor"),
 		Limit:  samgo.F(int64(1)),
 	})
 	if err != nil {

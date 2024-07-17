@@ -49,14 +49,14 @@ func TestDigitalWalletTokenListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.DigitalWalletTokens.List(context.TODO(), samgo.DigitalWalletTokenListParams{
-		CardID: samgo.F("string"),
+		CardID: samgo.F("card_id"),
 		CreatedAt: samgo.F(samgo.DigitalWalletTokenListParamsCreatedAt{
 			After:      samgo.F(time.Now()),
 			Before:     samgo.F(time.Now()),
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor: samgo.F("string"),
+		Cursor: samgo.F("cursor"),
 		Limit:  samgo.F(int64(1)),
 	})
 	if err != nil {

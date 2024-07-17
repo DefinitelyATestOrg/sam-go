@@ -75,7 +75,7 @@ func TestPhysicalCardProfileListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.PhysicalCardProfiles.List(context.TODO(), samgo.PhysicalCardProfileListParams{
-		Cursor:         samgo.F("string"),
+		Cursor:         samgo.F("cursor"),
 		IdempotencyKey: samgo.F("x"),
 		Limit:          samgo.F(int64(1)),
 		Status: samgo.F(samgo.PhysicalCardProfileListParamsStatus{
@@ -129,7 +129,7 @@ func TestPhysicalCardProfileCloneWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"physical_card_profile_m534d5rn9qyy9ufqxoec",
 		samgo.PhysicalCardProfileCloneParams{
-			CarrierImageFileID: samgo.F("string"),
+			CarrierImageFileID: samgo.F("carrier_image_file_id"),
 			ContactPhone:       samgo.F("x"),
 			Description:        samgo.F("x"),
 			FrontImageFileID:   samgo.F("file_o6aex13wm1jcc36sgcj1"),

@@ -77,7 +77,7 @@ func TestSimulationCardIncrementsWithOptionalParams(t *testing.T) {
 	_, err := client.Simulations.CardIncrements(context.TODO(), samgo.SimulationCardIncrementsParams{
 		Amount:              samgo.F(int64(500)),
 		CardPaymentID:       samgo.F("card_payment_nd3k2kacrqjli8482ave"),
-		EventSubscriptionID: samgo.F("string"),
+		EventSubscriptionID: samgo.F("event_subscription_id"),
 	})
 	if err != nil {
 		var apierr *samgo.Error

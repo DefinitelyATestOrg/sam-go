@@ -49,15 +49,15 @@ func TestInboundCheckDepositListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.InboundCheckDeposits.List(context.TODO(), samgo.InboundCheckDepositListParams{
-		AccountID:       samgo.F("string"),
-		CheckTransferID: samgo.F("string"),
+		AccountID:       samgo.F("account_id"),
+		CheckTransferID: samgo.F("check_transfer_id"),
 		CreatedAt: samgo.F(samgo.InboundCheckDepositListParamsCreatedAt{
 			After:      samgo.F(time.Now()),
 			Before:     samgo.F(time.Now()),
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor: samgo.F("string"),
+		Cursor: samgo.F("cursor"),
 		Limit:  samgo.F(int64(1)),
 	})
 	if err != nil {

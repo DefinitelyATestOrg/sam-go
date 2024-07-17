@@ -87,14 +87,14 @@ func TestRealTimePaymentsRequestForPaymentListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.RealTimePaymentsRequestForPayments.List(context.TODO(), samgo.RealTimePaymentsRequestForPaymentListParams{
-		AccountID: samgo.F("string"),
+		AccountID: samgo.F("account_id"),
 		CreatedAt: samgo.F(samgo.RealTimePaymentsRequestForPaymentListParamsCreatedAt{
 			After:      samgo.F(time.Now()),
 			Before:     samgo.F(time.Now()),
 			OnOrAfter:  samgo.F(time.Now()),
 			OnOrBefore: samgo.F(time.Now()),
 		}),
-		Cursor:         samgo.F("string"),
+		Cursor:         samgo.F("cursor"),
 		IdempotencyKey: samgo.F("x"),
 		Limit:          samgo.F(int64(1)),
 	})

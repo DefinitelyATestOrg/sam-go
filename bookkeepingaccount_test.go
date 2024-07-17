@@ -28,9 +28,9 @@ func TestBookkeepingAccountNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.BookkeepingAccounts.New(context.TODO(), samgo.BookkeepingAccountNewParams{
 		Name:               samgo.F("New Account!"),
-		AccountID:          samgo.F("string"),
+		AccountID:          samgo.F("account_id"),
 		ComplianceCategory: samgo.F(samgo.BookkeepingAccountNewParamsComplianceCategoryCommingledCash),
-		EntityID:           samgo.F("string"),
+		EntityID:           samgo.F("entity_id"),
 	})
 	if err != nil {
 		var apierr *samgo.Error
@@ -82,7 +82,7 @@ func TestBookkeepingAccountListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.BookkeepingAccounts.List(context.TODO(), samgo.BookkeepingAccountListParams{
-		Cursor:         samgo.F("string"),
+		Cursor:         samgo.F("cursor"),
 		IdempotencyKey: samgo.F("x"),
 		Limit:          samgo.F(int64(1)),
 	})
