@@ -1,9 +1,11 @@
-# Increase Go API Library
+# Sam Go API Library
 
 <a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2"><img src="https://pkg.go.dev/badge/github.com/DefinitelyATestOrg/sam-go/v2.svg" alt="Go Reference"></a>
 
-The Increase Go library provides convenient access to [the Increase REST
-API](https://increase.com) from applications written in Go. The full API of this library can be found in [api.md](api.md).
+The Sam Go library provides convenient access to [the Sam REST
+API](https://docs.sam.com) from applications written in Go. The full API of this library can be found in [api.md](api.md).
+
+It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Installation
 
@@ -43,21 +45,18 @@ import (
 	"fmt"
 
 	"github.com/DefinitelyATestOrg/sam-go/v2"
-	"github.com/DefinitelyATestOrg/sam-go/v2/option"
+	"github.com/DefinitelyATestOrg/sam-go/v2/shared"
 )
 
 func main() {
-	client := samgo.NewClient(
-		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("INCREASE_API_KEY")
-		option.WithEnvironmentSandbox(), // defaults to option.WithEnvironmentProduction()
-	)
-	account, err := client.Accounts.New(context.TODO(), samgo.AccountNewParams{
-		Name: samgo.F("My First Increase Account"),
+	client := samgo.NewClient()
+	order, err := client.Stores.NewOrder(context.TODO(), samgo.StoreNewOrderParams{
+		Order: shared.OrderParam{},
 	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", account.ID)
+	fmt.Printf("%+v\n", order.ID)
 }
 
 ```
@@ -146,7 +145,7 @@ client := samgo.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Accounts.New(context.TODO(), ...,
+client.Stores.NewOrder(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -162,33 +161,8 @@ This library provides some conveniences for working with paginated list endpoint
 
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
-```go
-iter := client.Accounts.ListAutoPaging(context.TODO(), samgo.AccountListParams{})
-// Automatically fetches more pages as needed.
-for iter.Next() {
-	account := iter.Current()
-	fmt.Printf("%+v\n", account)
-}
-if err := iter.Err(); err != nil {
-	panic(err.Error())
-}
-```
-
 Or you can use simple `.List()` methods to fetch a single page and receive a standard response object
 with additional helper methods like `.GetNextPage()`, e.g.:
-
-```go
-page, err := client.Accounts.List(context.TODO(), samgo.AccountListParams{})
-for page != nil {
-	for _, account := range page.Data {
-		fmt.Printf("%+v\n", account)
-	}
-	page, err = page.GetNextPage()
-}
-if err != nil {
-	panic(err.Error())
-}
-```
 
 ### Errors
 
@@ -200,20 +174,16 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Accounts.New(context.TODO(), samgo.AccountNewParams{
-	Name: samgo.F("New Account!"),
+_, err := client.Stores.NewOrder(context.TODO(), samgo.StoreNewOrderParams{
+	Order: shared.OrderParam{},
 })
 if err != nil {
 	var apierr *samgo.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
-		println(apierr.Type)                       // missing_param
-		println(apierr.Title)                      // Missing param "name"
-		println(apierr.Detail)                     // Looks like "naem" may have been a typo?
-		println(apierr.Status)                     // 400
 	}
-	panic(err.Error()) // GET "/accounts": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/store/order": 400 Bad Request { ... }
 }
 ```
 
@@ -231,10 +201,10 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Accounts.List(
+client.Stores.NewOrder(
 	ctx,
-	samgo.AccountListParams{
-		Status: samgo.F(samgo.AccountListParamsStatusOpen),
+	samgo.StoreNewOrderParams{
+		Order: shared.OrderParam{},
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -254,27 +224,6 @@ file returned by `os.Open` will be sent with the file name on disk.
 We also provide a helper `samgo.FileParam(reader io.Reader, filename string, contentType string)`
 which can be used to wrap any `io.Reader` with the appropriate file name and content type.
 
-```go
-// A file from the file system
-file, err := os.Open("my/file.txt")
-samgo.FileNewParams{
-	File:    samgo.F[io.Reader](file),
-	Purpose: samgo.F(samgo.FileNewParamsPurposeOther),
-}
-
-// A file from a string
-samgo.FileNewParams{
-	File:    samgo.F[io.Reader](strings.NewReader("my file contents")),
-	Purpose: samgo.F(samgo.FileNewParamsPurposeOther),
-}
-
-// With a custom filename and contentType
-samgo.FileNewParams{
-	File:    samgo.FileParam(strings.NewReader(`{"hello": "foo"}`), "file.go", "application/json"),
-	Purpose: samgo.F(samgo.FileNewParamsPurposeOther),
-}
-```
-
 ### Retries
 
 Certain errors will be automatically retried 2 times by default, with a short exponential backoff.
@@ -290,10 +239,10 @@ client := samgo.NewClient(
 )
 
 // Override per-request:
-client.Accounts.New(
+client.Stores.NewOrder(
 	context.TODO(),
-	samgo.AccountNewParams{
-		Name: samgo.F("Jack"),
+	samgo.StoreNewOrderParams{
+		Order: shared.OrderParam{},
 	},
 	option.WithMaxRetries(5),
 )

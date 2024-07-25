@@ -10,6 +10,7 @@ import (
 	"github.com/DefinitelyATestOrg/sam-go/v2"
 	"github.com/DefinitelyATestOrg/sam-go/v2/internal/testutil"
 	"github.com/DefinitelyATestOrg/sam-go/v2/option"
+	"github.com/DefinitelyATestOrg/sam-go/v2/shared"
 )
 
 func TestUsage(t *testing.T) {
@@ -22,13 +23,12 @@ func TestUsage(t *testing.T) {
 	}
 	client := samgo.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAPIKey("My API Key"),
 	)
-	account, err := client.Accounts.New(context.TODO(), samgo.AccountNewParams{
-		Name: samgo.F("My First Increase Account"),
+	order, err := client.Stores.NewOrder(context.TODO(), samgo.StoreNewOrderParams{
+		Order: shared.OrderParam{},
 	})
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%+v\n", account.ID)
+	t.Logf("%+v\n", order.ID)
 }

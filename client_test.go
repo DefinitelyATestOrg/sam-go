@@ -12,6 +12,7 @@ import (
 	"github.com/DefinitelyATestOrg/sam-go/v2"
 	"github.com/DefinitelyATestOrg/sam-go/v2/internal"
 	"github.com/DefinitelyATestOrg/sam-go/v2/option"
+	"github.com/DefinitelyATestOrg/sam-go/v2/shared"
 )
 
 type closureTransport struct {
@@ -36,10 +37,10 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Accounts.New(context.Background(), samgo.AccountNewParams{
-		Name: samgo.F("My First Increase Account"),
+	client.Stores.NewOrder(context.Background(), samgo.StoreNewOrderParams{
+		Order: shared.OrderParam{},
 	})
-	if userAgent != fmt.Sprintf("Increase/Go %s", internal.PackageVersion) {
+	if userAgent != fmt.Sprintf("Sam/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
 	}
 }
@@ -61,8 +62,8 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	res, err := client.Accounts.New(context.Background(), samgo.AccountNewParams{
-		Name: samgo.F("My First Increase Account"),
+	res, err := client.Stores.NewOrder(context.Background(), samgo.StoreNewOrderParams{
+		Order: shared.OrderParam{},
 	})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
@@ -89,8 +90,8 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	res, err := client.Accounts.New(context.Background(), samgo.AccountNewParams{
-		Name: samgo.F("My First Increase Account"),
+	res, err := client.Stores.NewOrder(context.Background(), samgo.StoreNewOrderParams{
+		Order: shared.OrderParam{},
 	})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
@@ -113,8 +114,8 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	res, err := client.Accounts.New(cancelCtx, samgo.AccountNewParams{
-		Name: samgo.F("My First Increase Account"),
+	res, err := client.Stores.NewOrder(cancelCtx, samgo.StoreNewOrderParams{
+		Order: shared.OrderParam{},
 	})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
@@ -134,8 +135,8 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	res, err := client.Accounts.New(cancelCtx, samgo.AccountNewParams{
-		Name: samgo.F("My First Increase Account"),
+	res, err := client.Stores.NewOrder(cancelCtx, samgo.StoreNewOrderParams{
+		Order: shared.OrderParam{},
 	})
 	if err == nil || res != nil {
 		t.Error("expected there to be a cancel error and for the response to be nil")
@@ -161,8 +162,8 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		res, err := client.Accounts.New(deadlineCtx, samgo.AccountNewParams{
-			Name: samgo.F("My First Increase Account"),
+		res, err := client.Stores.NewOrder(deadlineCtx, samgo.StoreNewOrderParams{
+			Order: shared.OrderParam{},
 		})
 		if err == nil || res != nil {
 			t.Error("expected there to be a deadline error and for the response to be nil")

@@ -4,30 +4,27 @@ package samgo
 
 import (
 	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apierror"
+	"github.com/DefinitelyATestOrg/sam-go/v2/shared"
 )
 
 type Error = apierror.Error
-type ErrorStatus = apierror.ErrorStatus
 
-const ErrorStatus429 = apierror.ErrorStatus429
-const ErrorStatus403 = apierror.ErrorStatus403
-const ErrorStatus404 = apierror.ErrorStatus404
-const ErrorStatus400 = apierror.ErrorStatus400
-const ErrorStatus409 = apierror.ErrorStatus409
-const ErrorStatus401 = apierror.ErrorStatus401
-const ErrorStatus500 = apierror.ErrorStatus500
+// This is an alias to an internal type.
+type Order = shared.Order
 
-type ErrorType = apierror.ErrorType
+// Order Status
+//
+// This is an alias to an internal type.
+type OrderStatus = shared.OrderStatus
 
-const ErrorTypeRateLimitedError = apierror.ErrorTypeRateLimitedError
-const ErrorTypePrivateFeatureError = apierror.ErrorTypePrivateFeatureError
-const ErrorTypeObjectNotFoundError = apierror.ErrorTypeObjectNotFoundError
-const ErrorTypeMalformedRequestError = apierror.ErrorTypeMalformedRequestError
-const ErrorTypeInvalidParametersError = apierror.ErrorTypeInvalidParametersError
-const ErrorTypeInvalidOperationError = apierror.ErrorTypeInvalidOperationError
-const ErrorTypeInvalidAPIKeyError = apierror.ErrorTypeInvalidAPIKeyError
-const ErrorTypeInternalServerError = apierror.ErrorTypeInternalServerError
-const ErrorTypeInsufficientPermissionsError = apierror.ErrorTypeInsufficientPermissionsError
-const ErrorTypeIdempotencyKeyAlreadyUsedError = apierror.ErrorTypeIdempotencyKeyAlreadyUsedError
-const ErrorTypeEnvironmentMismatchError = apierror.ErrorTypeEnvironmentMismatchError
-const ErrorTypeAPIMethodNotFoundError = apierror.ErrorTypeAPIMethodNotFoundError
+// This is an alias to an internal value.
+const OrderStatusPlaced = shared.OrderStatusPlaced
+
+// This is an alias to an internal value.
+const OrderStatusApproved = shared.OrderStatusApproved
+
+// This is an alias to an internal value.
+const OrderStatusDelivered = shared.OrderStatusDelivered
+
+// This is an alias to an internal type.
+type OrderParam = shared.OrderParam
