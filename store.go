@@ -4,6 +4,7 @@ package samgo
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apijson"
@@ -30,6 +31,25 @@ func NewStoreService(opts ...option.RequestOption) (r *StoreService) {
 	r = &StoreService{}
 	r.Options = opts
 	r.Orders = NewStoreOrderService(opts...)
+	return
+}
+
+// For valid response try integer IDs with value <= 5 or > 10. Other values will
+// generate exceptions.
+func (r *StoreService) Get(ctx context.Context, orderID int64, opts ...option.RequestOption) (res *shared.Order, err error) {
+	opts = append(r.Options[:], opts...)
+	path := fmt.Sprintf("store/order/%v", orderID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	return
+}
+
+// For valid response try integer IDs with value < 1000. Anything above 1000 or
+// nonintegers will generate API errors
+func (r *StoreService) Delete(ctx context.Context, orderID int64, opts ...option.RequestOption) (err error) {
+	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithHeader("Accept", "")}, opts...)
+	path := fmt.Sprintf("store/order/%v", orderID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, nil, opts...)
 	return
 }
 

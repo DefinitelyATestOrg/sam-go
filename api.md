@@ -35,19 +35,12 @@ Response Types:
 
 Methods:
 
+- <code title="get /store/order/{orderId}">client.Stores.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2#StoreService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, orderID <a href="https://pkg.go.dev/builtin#int64">int64</a>) (<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2/shared">shared</a>.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2/shared#Order">Order</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="delete /store/order/{orderId}">client.Stores.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2#StoreService.Delete">Delete</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, orderID <a href="https://pkg.go.dev/builtin#int64">int64</a>) <a href="https://pkg.go.dev/builtin#error">error</a></code>
 - <code title="post /store/order">client.Stores.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2#StoreService.NewOrder">NewOrder</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2">samgo</a>.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2#StoreNewOrderParams">StoreNewOrderParams</a>) (<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2/shared">shared</a>.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2/shared#Order">Order</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="get /store/inventory">client.Stores.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2#StoreService.Inventory">Inventory</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) (<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2">samgo</a>.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2#StoreInventoryResponse">StoreInventoryResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 ## Orders
-
-# Store
-
-## Orders
-
-Methods:
-
-- <code title="get /store/order/{orderId}">client.Store.Orders.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2#StoreOrderService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, orderID <a href="https://pkg.go.dev/builtin#int64">int64</a>) (<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2/shared">shared</a>.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2/shared#Order">Order</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-- <code title="delete /store/order/{orderId}">client.Store.Orders.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2#StoreOrderService.Delete">Delete</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, orderID <a href="https://pkg.go.dev/builtin#int64">int64</a>) <a href="https://pkg.go.dev/builtin#error">error</a></code>
 
 # Users
 

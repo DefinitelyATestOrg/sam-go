@@ -17,7 +17,6 @@ type Client struct {
 	Options []option.RequestOption
 	Pets    *PetService
 	Stores  *StoreService
-	Store   *StoreService
 	Users   *UserService
 }
 
@@ -33,7 +32,6 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 
 	r.Pets = NewPetService(opts...)
 	r.Stores = NewStoreService(opts...)
-	r.Store = NewStoreService(opts...)
 	r.Users = NewUserService(opts...)
 
 	return
