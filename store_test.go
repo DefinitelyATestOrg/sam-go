@@ -71,11 +71,11 @@ func TestStoreNewOrderWithOptionalParams(t *testing.T) {
 	_, err := client.Stores.NewOrder(context.TODO(), samgo.StoreNewOrderParams{
 		Order: shared.OrderParam{
 			ID:       samgo.F(int64(10)),
+			Complete: samgo.F(true),
 			PetID:    samgo.F(int64(198772)),
 			Quantity: samgo.F(int64(7)),
 			ShipDate: samgo.F(time.Now()),
-			Status:   samgo.F(shared.OrderStatusApproved),
-			Complete: samgo.F(true),
+			Status:   samgo.F(shared.OrderStatusPlaced),
 		},
 	})
 	if err != nil {

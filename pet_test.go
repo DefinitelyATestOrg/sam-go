@@ -77,13 +77,14 @@ func TestPetUpdateWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Pets.Update(context.TODO(), samgo.PetUpdateParams{
 		Pet: samgo.PetParam{
-			ID:   samgo.F(int64(10)),
-			Name: samgo.F("doggie"),
+			Name:      samgo.F("doggie"),
+			PhotoURLs: samgo.F([]string{"string", "string", "string"}),
+			ID:        samgo.F(int64(10)),
 			Category: samgo.F(samgo.PetCategoryParam{
 				ID:   samgo.F(int64(1)),
 				Name: samgo.F("Dogs"),
 			}),
-			PhotoURLs: samgo.F([]string{"string", "string", "string"}),
+			Status: samgo.F(samgo.PetStatusAvailable),
 			Tags: samgo.F([]samgo.PetTagParam{{
 				ID:   samgo.F(int64(0)),
 				Name: samgo.F("name"),
@@ -94,7 +95,6 @@ func TestPetUpdateWithOptionalParams(t *testing.T) {
 				ID:   samgo.F(int64(0)),
 				Name: samgo.F("name"),
 			}}),
-			Status: samgo.F(samgo.PetStatusAvailable),
 		},
 	})
 	if err != nil {

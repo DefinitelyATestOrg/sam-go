@@ -27,12 +27,12 @@ func TestUserNewWithOptionalParams(t *testing.T) {
 	err := client.Users.New(context.TODO(), samgo.UserNewParams{
 		User: samgo.UserParam{
 			ID:         samgo.F(int64(10)),
-			Username:   samgo.F("theUser"),
+			Email:      samgo.F("john@email.com"),
 			FirstName:  samgo.F("John"),
 			LastName:   samgo.F("James"),
-			Email:      samgo.F("john@email.com"),
 			Password:   samgo.F("12345"),
 			Phone:      samgo.F("12345"),
+			Username:   samgo.F("theUser"),
 			UserStatus: samgo.F(int64(1)),
 		},
 	})
@@ -83,12 +83,12 @@ func TestUserUpdateWithOptionalParams(t *testing.T) {
 		samgo.UserUpdateParams{
 			User: samgo.UserParam{
 				ID:         samgo.F(int64(10)),
-				Username:   samgo.F("theUser"),
+				Email:      samgo.F("john@email.com"),
 				FirstName:  samgo.F("John"),
 				LastName:   samgo.F("James"),
-				Email:      samgo.F("john@email.com"),
 				Password:   samgo.F("12345"),
 				Phone:      samgo.F("12345"),
+				Username:   samgo.F("theUser"),
 				UserStatus: samgo.F(int64(1)),
 			},
 		},
@@ -137,30 +137,30 @@ func TestUserNewWithList(t *testing.T) {
 	_, err := client.Users.NewWithList(context.TODO(), samgo.UserNewWithListParams{
 		Body: []samgo.UserParam{{
 			ID:         samgo.F(int64(10)),
-			Username:   samgo.F("theUser"),
+			Email:      samgo.F("john@email.com"),
 			FirstName:  samgo.F("John"),
 			LastName:   samgo.F("James"),
-			Email:      samgo.F("john@email.com"),
 			Password:   samgo.F("12345"),
 			Phone:      samgo.F("12345"),
+			Username:   samgo.F("theUser"),
 			UserStatus: samgo.F(int64(1)),
 		}, {
 			ID:         samgo.F(int64(10)),
-			Username:   samgo.F("theUser"),
+			Email:      samgo.F("john@email.com"),
 			FirstName:  samgo.F("John"),
 			LastName:   samgo.F("James"),
-			Email:      samgo.F("john@email.com"),
 			Password:   samgo.F("12345"),
 			Phone:      samgo.F("12345"),
+			Username:   samgo.F("theUser"),
 			UserStatus: samgo.F(int64(1)),
 		}, {
 			ID:         samgo.F(int64(10)),
-			Username:   samgo.F("theUser"),
+			Email:      samgo.F("john@email.com"),
 			FirstName:  samgo.F("John"),
 			LastName:   samgo.F("James"),
-			Email:      samgo.F("john@email.com"),
 			Password:   samgo.F("12345"),
 			Phone:      samgo.F("12345"),
+			Username:   samgo.F("theUser"),
 			UserStatus: samgo.F(int64(1)),
 		}},
 	})
