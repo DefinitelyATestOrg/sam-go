@@ -20,7 +20,7 @@ or products provided by Sam please follow the respective company's security repo
 
 ### Sam Terms and Policies
 
-Please contact apiteam@swagger.io. for any questions or concerns regarding security of our services.
+Please contact apiteam@swagger.io for any questions or concerns regarding security of our services.
 
 ---
 
