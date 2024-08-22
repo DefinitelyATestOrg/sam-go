@@ -3,7 +3,7 @@
 <a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2"><img src="https://pkg.go.dev/badge/github.com/DefinitelyATestOrg/sam-go/v2.svg" alt="Go Reference"></a>
 
 The Sam Go library provides convenient access to [the Sam REST
-API](https://docs.sam.com.) from applications written in Go. The full API of this library can be found in [api.md](api.md).
+API](https://docs.sam.com) from applications written in Go. The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainlessapi.com/).
 
