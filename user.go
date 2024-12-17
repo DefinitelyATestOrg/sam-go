@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package samgo
+package sam
 
 import (
 	"context"
@@ -9,11 +9,11 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apijson"
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apiquery"
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal/param"
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal/requestconfig"
-	"github.com/DefinitelyATestOrg/sam-go/v2/option"
+	"github.com/DefinitelyATestOrg/sam-go/internal/apijson"
+	"github.com/DefinitelyATestOrg/sam-go/internal/apiquery"
+	"github.com/DefinitelyATestOrg/sam-go/internal/param"
+	"github.com/DefinitelyATestOrg/sam-go/internal/requestconfig"
+	"github.com/DefinitelyATestOrg/sam-go/option"
 )
 
 // UserService contains methods and other services that help with interacting with
@@ -36,11 +36,10 @@ func NewUserService(opts ...option.RequestOption) (r *UserService) {
 }
 
 // This can only be done by the logged in user.
-func (r *UserService) New(ctx context.Context, body UserNewParams, opts ...option.RequestOption) (err error) {
+func (r *UserService) New(ctx context.Context, body UserNewParams, opts ...option.RequestOption) (res *User, err error) {
 	opts = append(r.Options[:], opts...)
-	opts = append([]option.RequestOption{option.WithHeader("Accept", "")}, opts...)
 	path := "user"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, nil, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 

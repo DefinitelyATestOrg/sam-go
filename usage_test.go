@@ -1,16 +1,15 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package samgo_test
+package sam_test
 
 import (
 	"context"
 	"os"
 	"testing"
 
-	"github.com/DefinitelyATestOrg/sam-go/v2"
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal/testutil"
-	"github.com/DefinitelyATestOrg/sam-go/v2/option"
-	"github.com/DefinitelyATestOrg/sam-go/v2/shared"
+	"github.com/DefinitelyATestOrg/sam-go"
+	"github.com/DefinitelyATestOrg/sam-go/internal/testutil"
+	"github.com/DefinitelyATestOrg/sam-go/option"
 )
 
 func TestUsage(t *testing.T) {
@@ -21,14 +20,15 @@ func TestUsage(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := samgo.NewClient(
+	client := sam.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
 	)
-	order, err := client.Stores.NewOrder(context.TODO(), samgo.StoreNewOrderParams{
-		Order: shared.OrderParam{},
+	user, err := client.Users.New(context.TODO(), sam.UserNewParams{
+		User: sam.UserParam{},
 	})
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%+v\n", order.ID)
+	t.Logf("%+v\n", user.ID)
 }

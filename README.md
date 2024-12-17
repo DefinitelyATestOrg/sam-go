@@ -1,6 +1,6 @@
 # Sam Go API Library
 
-<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2"><img src="https://pkg.go.dev/badge/github.com/DefinitelyATestOrg/sam-go/v2.svg" alt="Go Reference"></a>
+<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go"><img src="https://pkg.go.dev/badge/github.com/DefinitelyATestOrg/sam-go.svg" alt="Go Reference"></a>
 
 The Sam Go library provides convenient access to [the Sam REST
 API](https://docs.sam.com) from applications written in Go. The full API of this library can be found in [api.md](api.md).
@@ -13,7 +13,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ```go
 import (
-	"github.com/DefinitelyATestOrg/sam-go/v2" // imported as samgo
+	"github.com/DefinitelyATestOrg/sam-go" // imported as sam
 )
 ```
 
@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/DefinitelyATestOrg/sam-go/v2@v2.0.0-beta.1'
+go get -u 'github.com/DefinitelyATestOrg/sam-go@v0.0.1-alpha.0'
 ```
 
 <!-- x-release-please-end -->
@@ -44,19 +44,21 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/DefinitelyATestOrg/sam-go/v2"
-	"github.com/DefinitelyATestOrg/sam-go/v2/shared"
+	"github.com/DefinitelyATestOrg/sam-go"
+	"github.com/DefinitelyATestOrg/sam-go/option"
 )
 
 func main() {
-	client := samgo.NewClient()
-	order, err := client.Stores.NewOrder(context.TODO(), samgo.StoreNewOrderParams{
-		Order: shared.OrderParam{},
+	client := sam.NewClient(
+		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("API_KEY")
+	)
+	user, err := client.Users.New(context.TODO(), sam.UserNewParams{
+		User: sam.UserParam{},
 	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", order.ID)
+	fmt.Printf("%+v\n", user.ID)
 }
 
 ```
@@ -75,18 +77,18 @@ To send a null, use `Null[T]()`, and to send a nonconforming value, use `Raw[T](
 
 ```go
 params := FooParams{
-	Name: samgo.F("hello"),
+	Name: sam.F("hello"),
 
 	// Explicitly send `"description": null`
-	Description: samgo.Null[string](),
+	Description: sam.Null[string](),
 
-	Point: samgo.F(samgo.Point{
-		X: samgo.Int(0),
-		Y: samgo.Int(1),
+	Point: sam.F(sam.Point{
+		X: sam.Int(0),
+		Y: sam.Int(1),
 
 		// In cases where the API specifies a given type,
 		// but you want to send something else, use `Raw`:
-		Z: samgo.Raw[int64](0.01), // sends a float
+		Z: sam.Raw[int64](0.01), // sends a float
 	}),
 }
 ```
@@ -140,12 +142,12 @@ This library uses the functional options pattern. Functions defined in the
 requests. For example:
 
 ```go
-client := samgo.NewClient(
+client := sam.NewClient(
 	// Adds a header to every request made by the client
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Stores.NewOrder(context.TODO(), ...,
+client.Users.New(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -153,7 +155,7 @@ client.Stores.NewOrder(context.TODO(), ...,
 )
 ```
 
-See the [full list of request options](https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2/option).
+See the [full list of request options](https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/option).
 
 ### Pagination
 
@@ -167,23 +169,23 @@ with additional helper methods like `.GetNextPage()`, e.g.:
 ### Errors
 
 When the API returns a non-success status code, we return an error with type
-`*samgo.Error`. This contains the `StatusCode`, `*http.Request`, and
+`*sam.Error`. This contains the `StatusCode`, `*http.Request`, and
 `*http.Response` values of the request, as well as the JSON of the error body
 (much like other response objects in the SDK).
 
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Stores.NewOrder(context.TODO(), samgo.StoreNewOrderParams{
-	Order: shared.OrderParam{},
+_, err := client.Users.New(context.TODO(), sam.UserNewParams{
+	User: sam.UserParam{},
 })
 if err != nil {
-	var apierr *samgo.Error
+	var apierr *sam.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
 	}
-	panic(err.Error()) // GET "/store/order": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/user": 400 Bad Request { ... }
 }
 ```
 
@@ -201,10 +203,10 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Stores.NewOrder(
+client.Users.New(
 	ctx,
-	samgo.StoreNewOrderParams{
-		Order: shared.OrderParam{},
+	sam.UserNewParams{
+		User: sam.UserParam{},
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -221,7 +223,7 @@ The file name and content-type can be customized by implementing `Name() string`
 string` on the run-time type of `io.Reader`. Note that `os.File` implements `Name() string`, so a
 file returned by `os.Open` will be sent with the file name on disk.
 
-We also provide a helper `samgo.FileParam(reader io.Reader, filename string, contentType string)`
+We also provide a helper `sam.FileParam(reader io.Reader, filename string, contentType string)`
 which can be used to wrap any `io.Reader` with the appropriate file name and content type.
 
 ### Retries
@@ -234,15 +236,15 @@ You can use the `WithMaxRetries` option to configure or disable this:
 
 ```go
 // Configure the default for all requests:
-client := samgo.NewClient(
+client := sam.NewClient(
 	option.WithMaxRetries(0), // default is 2
 )
 
 // Override per-request:
-client.Stores.NewOrder(
+client.Users.New(
 	context.TODO(),
-	samgo.StoreNewOrderParams{
-		Order: shared.OrderParam{},
+	sam.UserNewParams{
+		User: sam.UserParam{},
 	},
 	option.WithMaxRetries(5),
 )
@@ -281,9 +283,9 @@ or the `option.WithJSONSet()` methods.
 
 ```go
 params := FooNewParams{
-    ID:   samgo.F("id_xxxx"),
-    Data: samgo.F(FooNewParamsData{
-        FirstName: samgo.F("John"),
+    ID:   sam.F("id_xxxx"),
+    Data: sam.F(FooNewParamsData{
+        FirstName: sam.F("John"),
     }),
 }
 client.Foo.New(context.Background(), params, option.WithJSONSet("data.last_name", "Doe"))
@@ -318,7 +320,7 @@ func Logger(req *http.Request, next option.MiddlewareNext) (res *http.Response, 
     return res, err
 }
 
-client := samgo.NewClient(
+client := sam.NewClient(
 	option.WithMiddleware(Logger),
 )
 ```
