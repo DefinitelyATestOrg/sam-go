@@ -17,10 +17,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal"
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apierror"
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apiform"
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apiquery"
+	"github.com/DefinitelyATestOrg/sam-go/internal"
+	"github.com/DefinitelyATestOrg/sam-go/internal/apierror"
+	"github.com/DefinitelyATestOrg/sam-go/internal/apiform"
+	"github.com/DefinitelyATestOrg/sam-go/internal/apiquery"
 )
 
 func getDefaultHeaders() map[string]string {
@@ -172,6 +172,7 @@ type RequestConfig struct {
 	BaseURL        *url.URL
 	HTTPClient     *http.Client
 	Middlewares    []middleware
+	APIKey         string
 	// If ResponseBodyInto not nil, then we will attempt to deserialize into
 	// ResponseBodyInto. If Destination is a []byte, then it will return the body as
 	// is.
@@ -298,6 +299,10 @@ func retryDelay(res *http.Response, retryCount int) time.Duration {
 }
 
 func (cfg *RequestConfig) Execute() (err error) {
+	if cfg.BaseURL == nil {
+		return fmt.Errorf("requestconfig: base url is not set")
+	}
+
 	cfg.Request.URL, err = cfg.BaseURL.Parse(strings.TrimLeft(cfg.Request.URL.String(), "/"))
 	if err != nil {
 		return err
@@ -480,6 +485,7 @@ func (cfg *RequestConfig) Clone(ctx context.Context) *RequestConfig {
 		BaseURL:        cfg.BaseURL,
 		HTTPClient:     cfg.HTTPClient,
 		Middlewares:    cfg.Middlewares,
+		APIKey:         cfg.APIKey,
 	}
 
 	return new

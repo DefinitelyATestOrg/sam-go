@@ -11,7 +11,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal/requestconfig"
+	"github.com/DefinitelyATestOrg/sam-go/internal/requestconfig"
 	"github.com/tidwall/sjson"
 )
 
@@ -19,7 +19,7 @@ import (
 // which can be supplied to clients, services, and methods. You can read more about this functional
 // options pattern in our [README].
 //
-// [README]: https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2#readme-requestoptions
+// [README]: https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go#readme-requestoptions
 type RequestOption = func(*requestconfig.RequestConfig) error
 
 // WithBaseURL returns a RequestOption that sets the BaseURL for the client.
@@ -226,4 +226,12 @@ func WithRequestTimeout(dur time.Duration) RequestOption {
 // to use by default.
 func WithEnvironmentProduction() RequestOption {
 	return WithBaseURL("/api/v3/")
+}
+
+// WithAPIKey returns a RequestOption that sets the client setting "api_key".
+func WithAPIKey(value string) RequestOption {
+	return func(r *requestconfig.RequestConfig) error {
+		r.APIKey = value
+		return r.Apply(WithHeader("api_key", r.APIKey))
+	}
 }
