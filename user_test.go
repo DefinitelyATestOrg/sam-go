@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package samgo_test
+package sam_test
 
 import (
 	"context"
@@ -8,9 +8,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/DefinitelyATestOrg/sam-go/v2"
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal/testutil"
-	"github.com/DefinitelyATestOrg/sam-go/v2/option"
+	"github.com/DefinitelyATestOrg/sam-go"
+	"github.com/DefinitelyATestOrg/sam-go/internal/testutil"
+	"github.com/DefinitelyATestOrg/sam-go/option"
 )
 
 func TestUserNewWithOptionalParams(t *testing.T) {
@@ -21,23 +21,24 @@ func TestUserNewWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := samgo.NewClient(
+	client := sam.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
 	)
-	err := client.Users.New(context.TODO(), samgo.UserNewParams{
-		User: samgo.UserParam{
-			ID:         samgo.F(int64(10)),
-			Email:      samgo.F("john@email.com"),
-			FirstName:  samgo.F("John"),
-			LastName:   samgo.F("James"),
-			Password:   samgo.F("12345"),
-			Phone:      samgo.F("12345"),
-			Username:   samgo.F("theUser"),
-			UserStatus: samgo.F(int64(1)),
+	_, err := client.Users.New(context.TODO(), sam.UserNewParams{
+		User: sam.UserParam{
+			ID:         sam.F(int64(10)),
+			Email:      sam.F("john@email.com"),
+			FirstName:  sam.F("John"),
+			LastName:   sam.F("James"),
+			Password:   sam.F("12345"),
+			Phone:      sam.F("12345"),
+			Username:   sam.F("theUser"),
+			UserStatus: sam.F(int64(1)),
 		},
 	})
 	if err != nil {
-		var apierr *samgo.Error
+		var apierr *sam.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}
@@ -53,12 +54,13 @@ func TestUserGet(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := samgo.NewClient(
+	client := sam.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Users.Get(context.TODO(), "username")
 	if err != nil {
-		var apierr *samgo.Error
+		var apierr *sam.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}
@@ -74,27 +76,28 @@ func TestUserUpdateWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := samgo.NewClient(
+	client := sam.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
 	)
 	err := client.Users.Update(
 		context.TODO(),
 		"username",
-		samgo.UserUpdateParams{
-			User: samgo.UserParam{
-				ID:         samgo.F(int64(10)),
-				Email:      samgo.F("john@email.com"),
-				FirstName:  samgo.F("John"),
-				LastName:   samgo.F("James"),
-				Password:   samgo.F("12345"),
-				Phone:      samgo.F("12345"),
-				Username:   samgo.F("theUser"),
-				UserStatus: samgo.F(int64(1)),
+		sam.UserUpdateParams{
+			User: sam.UserParam{
+				ID:         sam.F(int64(10)),
+				Email:      sam.F("john@email.com"),
+				FirstName:  sam.F("John"),
+				LastName:   sam.F("James"),
+				Password:   sam.F("12345"),
+				Phone:      sam.F("12345"),
+				Username:   sam.F("theUser"),
+				UserStatus: sam.F(int64(1)),
 			},
 		},
 	)
 	if err != nil {
-		var apierr *samgo.Error
+		var apierr *sam.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}
@@ -110,12 +113,13 @@ func TestUserDelete(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := samgo.NewClient(
+	client := sam.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
 	)
 	err := client.Users.Delete(context.TODO(), "username")
 	if err != nil {
-		var apierr *samgo.Error
+		var apierr *sam.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}
@@ -131,41 +135,24 @@ func TestUserNewWithList(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := samgo.NewClient(
+	client := sam.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Users.NewWithList(context.TODO(), samgo.UserNewWithListParams{
-		Body: []samgo.UserParam{{
-			ID:         samgo.F(int64(10)),
-			Email:      samgo.F("john@email.com"),
-			FirstName:  samgo.F("John"),
-			LastName:   samgo.F("James"),
-			Password:   samgo.F("12345"),
-			Phone:      samgo.F("12345"),
-			Username:   samgo.F("theUser"),
-			UserStatus: samgo.F(int64(1)),
-		}, {
-			ID:         samgo.F(int64(10)),
-			Email:      samgo.F("john@email.com"),
-			FirstName:  samgo.F("John"),
-			LastName:   samgo.F("James"),
-			Password:   samgo.F("12345"),
-			Phone:      samgo.F("12345"),
-			Username:   samgo.F("theUser"),
-			UserStatus: samgo.F(int64(1)),
-		}, {
-			ID:         samgo.F(int64(10)),
-			Email:      samgo.F("john@email.com"),
-			FirstName:  samgo.F("John"),
-			LastName:   samgo.F("James"),
-			Password:   samgo.F("12345"),
-			Phone:      samgo.F("12345"),
-			Username:   samgo.F("theUser"),
-			UserStatus: samgo.F(int64(1)),
+	_, err := client.Users.NewWithList(context.TODO(), sam.UserNewWithListParams{
+		Body: []sam.UserParam{{
+			ID:         sam.F(int64(10)),
+			Email:      sam.F("john@email.com"),
+			FirstName:  sam.F("John"),
+			LastName:   sam.F("James"),
+			Password:   sam.F("12345"),
+			Phone:      sam.F("12345"),
+			Username:   sam.F("theUser"),
+			UserStatus: sam.F(int64(1)),
 		}},
 	})
 	if err != nil {
-		var apierr *samgo.Error
+		var apierr *sam.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}
@@ -181,15 +168,16 @@ func TestUserLoginWithOptionalParams(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := samgo.NewClient(
+	client := sam.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Users.Login(context.TODO(), samgo.UserLoginParams{
-		Password: samgo.F("password"),
-		Username: samgo.F("username"),
+	_, err := client.Users.Login(context.TODO(), sam.UserLoginParams{
+		Password: sam.F("password"),
+		Username: sam.F("username"),
 	})
 	if err != nil {
-		var apierr *samgo.Error
+		var apierr *sam.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}
@@ -205,12 +193,13 @@ func TestUserLogout(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := samgo.NewClient(
+	client := sam.NewClient(
 		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
 	)
 	err := client.Users.Logout(context.TODO())
 	if err != nil {
-		var apierr *samgo.Error
+		var apierr *sam.Error
 		if errors.As(err, &apierr) {
 			t.Log(string(apierr.DumpRequest(true)))
 		}

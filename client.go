@@ -1,13 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package samgo
+package sam
 
 import (
 	"context"
 	"net/http"
+	"os"
 
-	"github.com/DefinitelyATestOrg/sam-go/v2/internal/requestconfig"
-	"github.com/DefinitelyATestOrg/sam-go/v2/option"
+	"github.com/DefinitelyATestOrg/sam-go/internal/requestconfig"
+	"github.com/DefinitelyATestOrg/sam-go/option"
 )
 
 // Client creates a struct with services and top level methods that help with
@@ -15,23 +16,24 @@ import (
 // and instead use the [NewClient] method instead.
 type Client struct {
 	Options []option.RequestOption
-	Pets    *PetService
-	Stores  *StoreService
+	Store   *StoreService
 	Users   *UserService
 }
 
 // NewClient generates a new client with the default option read from the
-// environment (). The option passed in as arguments are applied after these
+// environment (API_KEY). The option passed in as arguments are applied after these
 // default arguments, and all option will be passed down to the services and
 // requests that this client makes.
 func NewClient(opts ...option.RequestOption) (r *Client) {
 	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
+	if o, ok := os.LookupEnv("API_KEY"); ok {
+		defaults = append(defaults, option.WithAPIKey(o))
+	}
 	opts = append(defaults, opts...)
 
 	r = &Client{Options: opts}
 
-	r.Pets = NewPetService(opts...)
-	r.Stores = NewStoreService(opts...)
+	r.Store = NewStoreService(opts...)
 	r.Users = NewUserService(opts...)
 
 	return
