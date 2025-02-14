@@ -37,7 +37,7 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Users.New(context.Background(), sam.UserNewParams{
+	client.User.New(context.Background(), sam.UserNewParams{
 		User: sam.UserParam{},
 	})
 	if userAgent != fmt.Sprintf("Sam/Go %s", internal.PackageVersion) {
@@ -62,7 +62,7 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Users.New(context.Background(), sam.UserNewParams{
+	_, err := client.User.New(context.Background(), sam.UserNewParams{
 		User: sam.UserParam{},
 	})
 	if err == nil {
@@ -98,7 +98,7 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeaderDel("X-Stainless-Retry-Count"),
 	)
-	_, err := client.Users.New(context.Background(), sam.UserNewParams{
+	_, err := client.User.New(context.Background(), sam.UserNewParams{
 		User: sam.UserParam{},
 	})
 	if err == nil {
@@ -129,7 +129,7 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeader("X-Stainless-Retry-Count", "42"),
 	)
-	_, err := client.Users.New(context.Background(), sam.UserNewParams{
+	_, err := client.User.New(context.Background(), sam.UserNewParams{
 		User: sam.UserParam{},
 	})
 	if err == nil {
@@ -159,7 +159,7 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.Users.New(context.Background(), sam.UserNewParams{
+	_, err := client.User.New(context.Background(), sam.UserNewParams{
 		User: sam.UserParam{},
 	})
 	if err == nil {
@@ -183,7 +183,7 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	_, err := client.Users.New(cancelCtx, sam.UserNewParams{
+	_, err := client.User.New(cancelCtx, sam.UserNewParams{
 		User: sam.UserParam{},
 	})
 	if err == nil {
@@ -204,7 +204,7 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	_, err := client.Users.New(cancelCtx, sam.UserNewParams{
+	_, err := client.User.New(cancelCtx, sam.UserNewParams{
 		User: sam.UserParam{},
 	})
 	if err == nil {
@@ -231,7 +231,7 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		_, err := client.Users.New(deadlineCtx, sam.UserNewParams{
+		_, err := client.User.New(deadlineCtx, sam.UserNewParams{
 			User: sam.UserParam{},
 		})
 		if err == nil {

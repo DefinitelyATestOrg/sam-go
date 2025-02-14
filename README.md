@@ -52,7 +52,7 @@ func main() {
 	client := sam.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("API_KEY")
 	)
-	user, err := client.Users.New(context.TODO(), sam.UserNewParams{
+	user, err := client.User.New(context.TODO(), sam.UserNewParams{
 		User: sam.UserParam{},
 	})
 	if err != nil {
@@ -147,7 +147,7 @@ client := sam.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Users.New(context.TODO(), ...,
+client.User.New(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -176,7 +176,7 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Users.New(context.TODO(), sam.UserNewParams{
+_, err := client.User.New(context.TODO(), sam.UserNewParams{
 	User: sam.UserParam{},
 })
 if err != nil {
@@ -203,7 +203,7 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Users.New(
+client.User.New(
 	ctx,
 	sam.UserNewParams{
 		User: sam.UserParam{},
@@ -241,7 +241,7 @@ client := sam.NewClient(
 )
 
 // Override per-request:
-client.Users.New(
+client.User.New(
 	context.TODO(),
 	sam.UserNewParams{
 		User: sam.UserParam{},
@@ -258,7 +258,7 @@ you need to examine response headers, status codes, or other details.
 ```go
 // Create a variable to store the HTTP response
 var response *http.Response
-user, err := client.Users.New(
+user, err := client.User.New(
 	context.TODO(),
 	sam.UserNewParams{
 		User: sam.UserParam{},
