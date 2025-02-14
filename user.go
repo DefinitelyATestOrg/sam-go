@@ -82,7 +82,7 @@ func (r *UserService) Delete(ctx context.Context, username string, opts ...optio
 }
 
 // Creates list of users with given input array
-func (r *UserService) NewWithList(ctx context.Context, body UserNewWithListParams, opts ...option.RequestOption) (res *User, err error) {
+func (r *UserService) NewList(ctx context.Context, body UserNewListParams, opts ...option.RequestOption) (res *User, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "user/createWithList"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -173,11 +173,11 @@ func (r UserUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r.User)
 }
 
-type UserNewWithListParams struct {
+type UserNewListParams struct {
 	Body []UserParam `json:"body,required"`
 }
 
-func (r UserNewWithListParams) MarshalJSON() (data []byte, err error) {
+func (r UserNewListParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r.Body)
 }
 

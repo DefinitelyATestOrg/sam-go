@@ -25,7 +25,7 @@ func TestUserNewWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Users.New(context.TODO(), sam.UserNewParams{
+	_, err := client.User.New(context.TODO(), sam.UserNewParams{
 		User: sam.UserParam{
 			ID:         sam.F(int64(10)),
 			Email:      sam.F("john@email.com"),
@@ -58,7 +58,7 @@ func TestUserGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Users.Get(context.TODO(), "username")
+	_, err := client.User.Get(context.TODO(), "username")
 	if err != nil {
 		var apierr *sam.Error
 		if errors.As(err, &apierr) {
@@ -80,7 +80,7 @@ func TestUserUpdateWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	err := client.Users.Update(
+	err := client.User.Update(
 		context.TODO(),
 		"username",
 		sam.UserUpdateParams{
@@ -117,7 +117,7 @@ func TestUserDelete(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	err := client.Users.Delete(context.TODO(), "username")
+	err := client.User.Delete(context.TODO(), "username")
 	if err != nil {
 		var apierr *sam.Error
 		if errors.As(err, &apierr) {
@@ -127,7 +127,7 @@ func TestUserDelete(t *testing.T) {
 	}
 }
 
-func TestUserNewWithList(t *testing.T) {
+func TestUserNewList(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -139,7 +139,7 @@ func TestUserNewWithList(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Users.NewWithList(context.TODO(), sam.UserNewWithListParams{
+	_, err := client.User.NewList(context.TODO(), sam.UserNewListParams{
 		Body: []sam.UserParam{{
 			ID:         sam.F(int64(10)),
 			Email:      sam.F("john@email.com"),
@@ -172,7 +172,7 @@ func TestUserLoginWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Users.Login(context.TODO(), sam.UserLoginParams{
+	_, err := client.User.Login(context.TODO(), sam.UserLoginParams{
 		Password: sam.F("password"),
 		Username: sam.F("username"),
 	})
@@ -197,7 +197,7 @@ func TestUserLogout(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	err := client.Users.Logout(context.TODO())
+	err := client.User.Logout(context.TODO())
 	if err != nil {
 		var apierr *sam.Error
 		if errors.As(err, &apierr) {
