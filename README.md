@@ -52,9 +52,7 @@ func main() {
 	client := sam.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("API_KEY")
 	)
-	user, err := client.User.New(context.TODO(), sam.UserNewParams{
-		User: sam.UserParam{},
-	})
+	user, err := client.User.New(context.TODO(), sam.UserNewParams{})
 	if err != nil {
 		panic(err.Error())
 	}
@@ -176,9 +174,7 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.User.New(context.TODO(), sam.UserNewParams{
-	User: sam.UserParam{},
-})
+_, err := client.User.New(context.TODO(), sam.UserNewParams{})
 if err != nil {
 	var apierr *sam.Error
 	if errors.As(err, &apierr) {
@@ -205,9 +201,7 @@ ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
 client.User.New(
 	ctx,
-	sam.UserNewParams{
-		User: sam.UserParam{},
-	},
+	sam.UserNewParams{},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
 )
@@ -243,9 +237,7 @@ client := sam.NewClient(
 // Override per-request:
 client.User.New(
 	context.TODO(),
-	sam.UserNewParams{
-		User: sam.UserParam{},
-	},
+	sam.UserNewParams{},
 	option.WithMaxRetries(5),
 )
 ```
@@ -260,9 +252,7 @@ you need to examine response headers, status codes, or other details.
 var response *http.Response
 user, err := client.User.New(
 	context.TODO(),
-	sam.UserNewParams{
-		User: sam.UserParam{},
-	},
+	sam.UserNewParams{},
 	option.WithResponseInto(&response),
 )
 if err != nil {

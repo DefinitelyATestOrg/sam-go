@@ -24,9 +24,7 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	user, err := client.User.New(context.TODO(), sam.UserNewParams{
-		User: sam.UserParam{},
-	})
+	user, err := client.User.New(context.TODO(), sam.UserNewParams{})
 	if err != nil {
 		t.Error(err)
 	}
