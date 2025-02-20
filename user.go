@@ -158,7 +158,7 @@ func (r UserParam) MarshalJSON() (data []byte, err error) {
 }
 
 type UserNewParams struct {
-	User UserParam `json:"user,required"`
+	User UserParam `json:"user"`
 }
 
 func (r UserNewParams) MarshalJSON() (data []byte, err error) {
@@ -166,7 +166,7 @@ func (r UserNewParams) MarshalJSON() (data []byte, err error) {
 }
 
 type UserUpdateParams struct {
-	User UserParam `json:"user,required"`
+	User UserParam `json:"user"`
 }
 
 func (r UserUpdateParams) MarshalJSON() (data []byte, err error) {
@@ -174,7 +174,7 @@ func (r UserUpdateParams) MarshalJSON() (data []byte, err error) {
 }
 
 type UserNewListParams struct {
-	Body []UserParam `json:"body,required"`
+	Body []UserParam `json:"body"`
 }
 
 func (r UserNewListParams) MarshalJSON() (data []byte, err error) {
