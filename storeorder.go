@@ -3,11 +3,6 @@
 package sam
 
 import (
-	"context"
-	"fmt"
-	"net/http"
-
-	"github.com/DefinitelyATestOrg/sam-go/internal/requestconfig"
 	"github.com/DefinitelyATestOrg/sam-go/option"
 )
 
@@ -27,24 +22,5 @@ type StoreOrderService struct {
 func NewStoreOrderService(opts ...option.RequestOption) (r *StoreOrderService) {
 	r = &StoreOrderService{}
 	r.Options = opts
-	return
-}
-
-// For valid response try integer IDs with value <= 5 or > 10. Other values will
-// generate exceptions.
-func (r *StoreOrderService) Get(ctx context.Context, orderID int64, opts ...option.RequestOption) (res *Order, err error) {
-	opts = append(r.Options[:], opts...)
-	path := fmt.Sprintf("store/order/%v", orderID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
-}
-
-// For valid response try integer IDs with value < 1000. Anything above 1000 or
-// nonintegers will generate API errors
-func (r *StoreOrderService) Delete(ctx context.Context, orderID int64, opts ...option.RequestOption) (err error) {
-	opts = append(r.Options[:], opts...)
-	opts = append([]option.RequestOption{option.WithHeader("Accept", "")}, opts...)
-	path := fmt.Sprintf("store/order/%v", orderID)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, nil, opts...)
 	return
 }

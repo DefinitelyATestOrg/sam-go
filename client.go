@@ -15,9 +15,14 @@ import (
 // interacting with the sam API. You should not instantiate this client directly,
 // and instead use the [NewClient] method instead.
 type Client struct {
-	Options []option.RequestOption
-	Store   *StoreService
-	User    *UserService
+	Options          []option.RequestOption
+	Store            *StoreService
+	User             *UserService
+	Messages         *MessageService
+	Complete         *CompleteService
+	Models           *ModelService
+	MessagesBetaTrue *MessagesBetaTrueService
+	ModelsBetaTrue   *ModelsBetaTrueService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -35,6 +40,11 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 
 	r.Store = NewStoreService(opts...)
 	r.User = NewUserService(opts...)
+	r.Messages = NewMessageService(opts...)
+	r.Complete = NewCompleteService(opts...)
+	r.Models = NewModelService(opts...)
+	r.MessagesBetaTrue = NewMessagesBetaTrueService(opts...)
+	r.ModelsBetaTrue = NewModelsBetaTrueService(opts...)
 
 	return
 }
