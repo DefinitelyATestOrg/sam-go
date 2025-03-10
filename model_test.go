@@ -1,0 +1,100 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+package sam_test
+
+import (
+	"context"
+	"errors"
+	"os"
+	"testing"
+
+	"github.com/DefinitelyATestOrg/sam-go"
+	"github.com/DefinitelyATestOrg/sam-go/internal/testutil"
+	"github.com/DefinitelyATestOrg/sam-go/option"
+)
+
+func TestModelGetWithOptionalParams(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := sam.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.Models.Get(
+		context.TODO(),
+		"model_id",
+		sam.ModelGetParams{
+			AnthropicVersion: sam.F("anthropic-version"),
+			XAPIKey:          sam.F("x-api-key"),
+		},
+	)
+	if err != nil {
+		var apierr *sam.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestModelListWithOptionalParams(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := sam.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.Models.List(context.TODO(), sam.ModelListParams{
+		AfterID:          sam.F("after_id"),
+		BeforeID:         sam.F("before_id"),
+		Limit:            sam.F(int64(1)),
+		AnthropicVersion: sam.F("anthropic-version"),
+		XAPIKey:          sam.F("x-api-key"),
+	})
+	if err != nil {
+		var apierr *sam.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}
+
+func TestModelGetBetaWithOptionalParams(t *testing.T) {
+	baseURL := "http://localhost:4010"
+	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
+		baseURL = envURL
+	}
+	if !testutil.CheckTestServer(t, baseURL) {
+		return
+	}
+	client := sam.NewClient(
+		option.WithBaseURL(baseURL),
+		option.WithAPIKey("My API Key"),
+	)
+	_, err := client.Models.GetBeta(
+		context.TODO(),
+		"model_id",
+		sam.ModelGetBetaParams{
+			AnthropicVersion: sam.F("anthropic-version"),
+			XAPIKey:          sam.F("x-api-key"),
+		},
+	)
+	if err != nil {
+		var apierr *sam.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+}

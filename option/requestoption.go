@@ -236,6 +236,6 @@ func WithEnvironmentProduction() RequestOption {
 func WithAPIKey(value string) RequestOption {
 	return func(r *requestconfig.RequestConfig) error {
 		r.APIKey = value
-		return r.Apply(WithHeader("api_key", r.APIKey))
+		return nil
 	}
 }

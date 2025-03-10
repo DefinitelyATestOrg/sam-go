@@ -4,16 +4,16 @@ package sam_test
 
 import (
 	"context"
+	"errors"
 	"os"
 	"testing"
 
 	"github.com/DefinitelyATestOrg/sam-go"
 	"github.com/DefinitelyATestOrg/sam-go/internal/testutil"
 	"github.com/DefinitelyATestOrg/sam-go/option"
-	"github.com/DefinitelyATestOrg/sam-go/shared"
 )
 
-func TestUsage(t *testing.T) {
+func TestModelsBetaTrueListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,16 +25,18 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	message, err := client.Messages.New(context.TODO(), sam.MessageNewParams{
-		MaxTokens: sam.F(int64(1024)),
-		Messages: sam.F([]sam.MessageNewParamsMessage{{
-			Content: sam.F[sam.MessageNewParamsMessagesContentUnion](shared.UnionString("Hello, world")),
-			Role:    sam.F(sam.MessageNewParamsMessagesRoleUser),
-		}}),
-		Model: sam.F("claude-3-7-sonnet-20250219"),
+	_, err := client.ModelsBetaTrue.List(context.TODO(), sam.ModelsBetaTrueListParams{
+		AfterID:          sam.F("after_id"),
+		BeforeID:         sam.F("before_id"),
+		Limit:            sam.F(int64(1)),
+		AnthropicVersion: sam.F("anthropic-version"),
+		XAPIKey:          sam.F("x-api-key"),
 	})
 	if err != nil {
-		t.Error(err)
+		var apierr *sam.Error
+		if errors.As(err, &apierr) {
+			t.Log(string(apierr.DumpRequest(true)))
+		}
+		t.Fatalf("err should be nil: %s", err.Error())
 	}
-	t.Logf("%+v\n", message.ID)
 }
