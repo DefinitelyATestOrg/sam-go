@@ -46,17 +46,25 @@ import (
 
 	"github.com/DefinitelyATestOrg/sam-go"
 	"github.com/DefinitelyATestOrg/sam-go/option"
+	"github.com/DefinitelyATestOrg/sam-go/shared"
 )
 
 func main() {
 	client := sam.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("API_KEY")
 	)
-	user, err := client.User.New(context.TODO(), sam.UserNewParams{})
+	message, err := client.Messages.New(context.TODO(), sam.MessageNewParams{
+		MaxTokens: sam.F(int64(1024)),
+		Messages: sam.F([]sam.MessageNewParamsMessage{{
+			Content: sam.F[sam.MessageNewParamsMessagesContentUnion](shared.UnionString("Hello, world")),
+			Role:    sam.F(sam.MessageNewParamsMessagesRoleUser),
+		}}),
+		Model: sam.F("claude-3-7-sonnet-20250219"),
+	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", user.ID)
+	fmt.Printf("%+v\n", message.ID)
 }
 
 ```
@@ -145,7 +153,7 @@ client := sam.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.User.New(context.TODO(), ...,
+client.Messages.New(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -174,14 +182,21 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.User.New(context.TODO(), sam.UserNewParams{})
+_, err := client.Messages.New(context.TODO(), sam.MessageNewParams{
+	MaxTokens: sam.F(int64(1024)),
+	Messages: sam.F([]sam.MessageNewParamsMessage{{
+		Content: sam.F[sam.MessageNewParamsMessagesContentUnion](shared.UnionString("Hello, world")),
+		Role:    sam.F(sam.MessageNewParamsMessagesRoleUser),
+	}}),
+	Model: sam.F("claude-3-7-sonnet-20250219"),
+})
 if err != nil {
 	var apierr *sam.Error
 	if errors.As(err, &apierr) {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
 	}
-	panic(err.Error()) // GET "/user": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/v1/messages": 400 Bad Request { ... }
 }
 ```
 
@@ -199,9 +214,16 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.User.New(
+client.Messages.New(
 	ctx,
-	sam.UserNewParams{},
+	sam.MessageNewParams{
+		MaxTokens: sam.F(int64(1024)),
+		Messages: sam.F([]sam.MessageNewParamsMessage{{
+			Content: sam.F[sam.MessageNewParamsMessagesContentUnion](shared.UnionString("Hello, world")),
+			Role:    sam.F(sam.MessageNewParamsMessagesRoleUser),
+		}}),
+		Model: sam.F("claude-3-7-sonnet-20250219"),
+	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
 )
@@ -235,9 +257,16 @@ client := sam.NewClient(
 )
 
 // Override per-request:
-client.User.New(
+client.Messages.New(
 	context.TODO(),
-	sam.UserNewParams{},
+	sam.MessageNewParams{
+		MaxTokens: sam.F(int64(1024)),
+		Messages: sam.F([]sam.MessageNewParamsMessage{{
+			Content: sam.F[sam.MessageNewParamsMessagesContentUnion](shared.UnionString("Hello, world")),
+			Role:    sam.F(sam.MessageNewParamsMessagesRoleUser),
+		}}),
+		Model: sam.F("claude-3-7-sonnet-20250219"),
+	},
 	option.WithMaxRetries(5),
 )
 ```
@@ -250,15 +279,22 @@ you need to examine response headers, status codes, or other details.
 ```go
 // Create a variable to store the HTTP response
 var response *http.Response
-user, err := client.User.New(
+message, err := client.Messages.New(
 	context.TODO(),
-	sam.UserNewParams{},
+	sam.MessageNewParams{
+		MaxTokens: sam.F(int64(1024)),
+		Messages: sam.F([]sam.MessageNewParamsMessage{{
+			Content: sam.F[sam.MessageNewParamsMessagesContentUnion](shared.UnionString("Hello, world")),
+			Role:    sam.F(sam.MessageNewParamsMessagesRoleUser),
+		}}),
+		Model: sam.F("claude-3-7-sonnet-20250219"),
+	},
 	option.WithResponseInto(&response),
 )
 if err != nil {
 	// handle error
 }
-fmt.Printf("%+v\n", user)
+fmt.Printf("%+v\n", message)
 
 fmt.Printf("Status Code: %d\n", response.StatusCode)
 fmt.Printf("Headers: %+#v\n", response.Header)

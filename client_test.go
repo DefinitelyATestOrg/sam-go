@@ -13,6 +13,7 @@ import (
 	"github.com/DefinitelyATestOrg/sam-go"
 	"github.com/DefinitelyATestOrg/sam-go/internal"
 	"github.com/DefinitelyATestOrg/sam-go/option"
+	"github.com/DefinitelyATestOrg/sam-go/shared"
 )
 
 type closureTransport struct {
@@ -37,7 +38,14 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.User.New(context.Background(), sam.UserNewParams{})
+	client.Messages.New(context.Background(), sam.MessageNewParams{
+		MaxTokens: sam.F(int64(1024)),
+		Messages: sam.F([]sam.MessageNewParamsMessage{{
+			Content: sam.F[sam.MessageNewParamsMessagesContentUnion](shared.UnionString("Hello, world")),
+			Role:    sam.F(sam.MessageNewParamsMessagesRoleUser),
+		}}),
+		Model: sam.F("claude-3-7-sonnet-20250219"),
+	})
 	if userAgent != fmt.Sprintf("Sam/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
 	}
@@ -60,7 +68,14 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.User.New(context.Background(), sam.UserNewParams{})
+	_, err := client.Messages.New(context.Background(), sam.MessageNewParams{
+		MaxTokens: sam.F(int64(1024)),
+		Messages: sam.F([]sam.MessageNewParamsMessage{{
+			Content: sam.F[sam.MessageNewParamsMessagesContentUnion](shared.UnionString("Hello, world")),
+			Role:    sam.F(sam.MessageNewParamsMessagesRoleUser),
+		}}),
+		Model: sam.F("claude-3-7-sonnet-20250219"),
+	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -94,7 +109,14 @@ func TestDeleteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeaderDel("X-Stainless-Retry-Count"),
 	)
-	_, err := client.User.New(context.Background(), sam.UserNewParams{})
+	_, err := client.Messages.New(context.Background(), sam.MessageNewParams{
+		MaxTokens: sam.F(int64(1024)),
+		Messages: sam.F([]sam.MessageNewParamsMessage{{
+			Content: sam.F[sam.MessageNewParamsMessagesContentUnion](shared.UnionString("Hello, world")),
+			Role:    sam.F(sam.MessageNewParamsMessagesRoleUser),
+		}}),
+		Model: sam.F("claude-3-7-sonnet-20250219"),
+	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -123,7 +145,14 @@ func TestOverwriteRetryCountHeader(t *testing.T) {
 		}),
 		option.WithHeader("X-Stainless-Retry-Count", "42"),
 	)
-	_, err := client.User.New(context.Background(), sam.UserNewParams{})
+	_, err := client.Messages.New(context.Background(), sam.MessageNewParams{
+		MaxTokens: sam.F(int64(1024)),
+		Messages: sam.F([]sam.MessageNewParamsMessage{{
+			Content: sam.F[sam.MessageNewParamsMessagesContentUnion](shared.UnionString("Hello, world")),
+			Role:    sam.F(sam.MessageNewParamsMessagesRoleUser),
+		}}),
+		Model: sam.F("claude-3-7-sonnet-20250219"),
+	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -151,7 +180,14 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	_, err := client.User.New(context.Background(), sam.UserNewParams{})
+	_, err := client.Messages.New(context.Background(), sam.MessageNewParams{
+		MaxTokens: sam.F(int64(1024)),
+		Messages: sam.F([]sam.MessageNewParamsMessage{{
+			Content: sam.F[sam.MessageNewParamsMessagesContentUnion](shared.UnionString("Hello, world")),
+			Role:    sam.F(sam.MessageNewParamsMessagesRoleUser),
+		}}),
+		Model: sam.F("claude-3-7-sonnet-20250219"),
+	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -173,7 +209,14 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	_, err := client.User.New(cancelCtx, sam.UserNewParams{})
+	_, err := client.Messages.New(cancelCtx, sam.MessageNewParams{
+		MaxTokens: sam.F(int64(1024)),
+		Messages: sam.F([]sam.MessageNewParamsMessage{{
+			Content: sam.F[sam.MessageNewParamsMessagesContentUnion](shared.UnionString("Hello, world")),
+			Role:    sam.F(sam.MessageNewParamsMessagesRoleUser),
+		}}),
+		Model: sam.F("claude-3-7-sonnet-20250219"),
+	})
 	if err == nil {
 		t.Error("Expected there to be a cancel error")
 	}
@@ -192,7 +235,14 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	_, err := client.User.New(cancelCtx, sam.UserNewParams{})
+	_, err := client.Messages.New(cancelCtx, sam.MessageNewParams{
+		MaxTokens: sam.F(int64(1024)),
+		Messages: sam.F([]sam.MessageNewParamsMessage{{
+			Content: sam.F[sam.MessageNewParamsMessagesContentUnion](shared.UnionString("Hello, world")),
+			Role:    sam.F(sam.MessageNewParamsMessagesRoleUser),
+		}}),
+		Model: sam.F("claude-3-7-sonnet-20250219"),
+	})
 	if err == nil {
 		t.Error("expected there to be a cancel error")
 	}
@@ -217,7 +267,14 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		_, err := client.User.New(deadlineCtx, sam.UserNewParams{})
+		_, err := client.Messages.New(deadlineCtx, sam.MessageNewParams{
+			MaxTokens: sam.F(int64(1024)),
+			Messages: sam.F([]sam.MessageNewParamsMessage{{
+				Content: sam.F[sam.MessageNewParamsMessagesContentUnion](shared.UnionString("Hello, world")),
+				Role:    sam.F(sam.MessageNewParamsMessagesRoleUser),
+			}}),
+			Model: sam.F("claude-3-7-sonnet-20250219"),
+		})
 		if err == nil {
 			t.Error("expected there to be a deadline error")
 		}
