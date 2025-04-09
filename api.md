@@ -111,11 +111,3 @@ Methods:
 - <code title="get /v1/models?beta=true">client.ModelsBetaTrue.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go#ModelsBetaTrueService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, params <a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go">sam</a>.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go#ModelsBetaTrueListParams">ModelsBetaTrueListParams</a>) (<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go">sam</a>.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go#ModelsBetaTrueListResponse">ModelsBetaTrueListResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 # SamPlopPlop
-
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go">sam</a>.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go#SamPlopPlopNewMessageResponse">SamPlopPlopNewMessageResponse</a>
-
-Methods:
-
-- <code title="post /v1/sam-plop-plop">client.SamPlopPlop.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go#SamPlopPlopService.NewMessage">NewMessage</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, params <a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go">sam</a>.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go#SamPlopPlopNewMessageParams">SamPlopPlopNewMessageParams</a>) (<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go">sam</a>.<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go#SamPlopPlopNewMessageResponse">SamPlopPlopNewMessageResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
