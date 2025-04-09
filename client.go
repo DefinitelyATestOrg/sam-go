@@ -23,6 +23,7 @@ type Client struct {
 	Models           *ModelService
 	MessagesBetaTrue *MessagesBetaTrueService
 	ModelsBetaTrue   *ModelsBetaTrueService
+	SamPlopPlop      *SamPlopPlopService
 }
 
 // DefaultClientOptions read from the environment (API_KEY). This should be used to
@@ -51,6 +52,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Models = NewModelService(opts...)
 	r.MessagesBetaTrue = NewMessagesBetaTrueService(opts...)
 	r.ModelsBetaTrue = NewModelsBetaTrueService(opts...)
+	r.SamPlopPlop = NewSamPlopPlopService(opts...)
 
 	return
 }
