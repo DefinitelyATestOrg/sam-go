@@ -39,10 +39,4 @@ func (UnionString) ImplementsMessagesBetaTrueNewParamsMessagesContentArrayBetaRe
 }
 func (UnionString) ImplementsMessagesBetaTrueNewParamsMessagesContentArrayBetaRequestDocumentBlockSourceBetaContentBlockSourceContentUnion() {
 }
-func (UnionString) ImplementsMessagesBetaTrueNewParamsSystemUnion()            {}
-func (UnionString) ImplementsSamPlopPlopNewMessageParamsMessagesContentUnion() {}
-func (UnionString) ImplementsSamPlopPlopNewMessageParamsMessagesContentArrayRequestToolResultBlockContentUnion() {
-}
-func (UnionString) ImplementsSamPlopPlopNewMessageParamsMessagesContentArrayRequestDocumentBlockSourceContentBlockSourceContentUnion() {
-}
-func (UnionString) ImplementsSamPlopPlopNewMessageParamsSystemUnion() {}
+func (UnionString) ImplementsMessagesBetaTrueNewParamsSystemUnion() {}
