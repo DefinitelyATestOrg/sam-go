@@ -1,4 +1,4 @@
-module github.com/DefinitelyATestOrg/sam-go
+module github.com/DefinitelyATestOrg/sam-go/v4
 
 go 1.21
 

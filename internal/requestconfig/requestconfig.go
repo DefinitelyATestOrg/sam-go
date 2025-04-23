@@ -18,11 +18,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/DefinitelyATestOrg/sam-go/internal"
-	"github.com/DefinitelyATestOrg/sam-go/internal/apierror"
-	"github.com/DefinitelyATestOrg/sam-go/internal/apiform"
-	"github.com/DefinitelyATestOrg/sam-go/internal/apiquery"
-	"github.com/DefinitelyATestOrg/sam-go/internal/param"
+	"github.com/DefinitelyATestOrg/sam-go/v4/internal"
+	"github.com/DefinitelyATestOrg/sam-go/v4/internal/apierror"
+	"github.com/DefinitelyATestOrg/sam-go/v4/internal/apiform"
+	"github.com/DefinitelyATestOrg/sam-go/v4/internal/apiquery"
+	"github.com/DefinitelyATestOrg/sam-go/v4/internal/param"
 )
 
 func getDefaultHeaders() map[string]string {

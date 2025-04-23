@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/DefinitelyATestOrg/sam-go/internal/requestconfig"
+	"github.com/DefinitelyATestOrg/sam-go/v4/internal/requestconfig"
 	"github.com/tidwall/sjson"
 )
 

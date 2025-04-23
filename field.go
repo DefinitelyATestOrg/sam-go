@@ -1,7 +1,7 @@
 package sam
 
 import (
-	"github.com/DefinitelyATestOrg/sam-go/internal/param"
+	"github.com/DefinitelyATestOrg/sam-go/v4/internal/param"
 	"io"
 )
 

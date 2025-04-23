@@ -3,7 +3,7 @@
 package sam
 
 import (
-	"github.com/DefinitelyATestOrg/sam-go/option"
+	"github.com/DefinitelyATestOrg/sam-go/v4/option"
 )
 
 // SamPlopPlopService contains methods and other services that help with

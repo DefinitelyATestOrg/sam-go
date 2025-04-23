@@ -3,7 +3,7 @@
 package sam
 
 import (
-	"github.com/DefinitelyATestOrg/sam-go/option"
+	"github.com/DefinitelyATestOrg/sam-go/v4/option"
 )
 
 // StoreService contains methods and other services that help with interacting with

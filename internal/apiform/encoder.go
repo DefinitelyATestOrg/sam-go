@@ -13,7 +13,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/DefinitelyATestOrg/sam-go/internal/param"
+	"github.com/DefinitelyATestOrg/sam-go/v4/internal/param"
 )
 
 var encoders sync.Map // map[encoderEntry]encoderFunc
