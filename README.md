@@ -1,6 +1,6 @@
 # Sam Go API Library
 
-<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go"><img src="https://pkg.go.dev/badge/github.com/DefinitelyATestOrg/sam-go.svg" alt="Go Reference"></a>
+<a href="https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2"><img src="https://pkg.go.dev/badge/github.com/DefinitelyATestOrg/sam-go/v2.svg" alt="Go Reference"></a>
 
 The Sam Go library provides convenient access to the [Sam REST API](https://docs.sam.com)
 from applications written in Go.
@@ -13,7 +13,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ```go
 import (
-	"github.com/DefinitelyATestOrg/sam-go" // imported as sam
+	"github.com/DefinitelyATestOrg/sam-go/v2" // imported as sam
 )
 ```
 
@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/DefinitelyATestOrg/sam-go@v0.0.1-alpha.0'
+go get -u 'github.com/DefinitelyATestOrg/sam-go/v2@v2.0.0-beta.1'
 ```
 
 <!-- x-release-please-end -->
@@ -44,9 +44,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/DefinitelyATestOrg/sam-go"
-	"github.com/DefinitelyATestOrg/sam-go/option"
-	"github.com/DefinitelyATestOrg/sam-go/shared"
+	"github.com/DefinitelyATestOrg/sam-go/v2"
+	"github.com/DefinitelyATestOrg/sam-go/v2/option"
+	"github.com/DefinitelyATestOrg/sam-go/v2/shared"
 )
 
 func main() {
@@ -161,7 +161,7 @@ client.Messages.New(context.TODO(), ...,
 )
 ```
 
-See the [full list of request options](https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/option).
+See the [full list of request options](https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2/option).
 
 ### Pagination
 

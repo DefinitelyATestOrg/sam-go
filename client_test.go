@@ -10,10 +10,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/DefinitelyATestOrg/sam-go"
-	"github.com/DefinitelyATestOrg/sam-go/internal"
-	"github.com/DefinitelyATestOrg/sam-go/option"
-	"github.com/DefinitelyATestOrg/sam-go/shared"
+	"github.com/DefinitelyATestOrg/sam-go/v2"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal"
+	"github.com/DefinitelyATestOrg/sam-go/v2/option"
+	"github.com/DefinitelyATestOrg/sam-go/v2/shared"
 )
 
 type closureTransport struct {

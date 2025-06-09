@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/DefinitelyATestOrg/sam-go/internal/requestconfig"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal/requestconfig"
 	"github.com/tidwall/sjson"
 )
 
@@ -19,7 +19,7 @@ import (
 // which can be supplied to clients, services, and methods. You can read more about this functional
 // options pattern in our [README].
 //
-// [README]: https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go#readme-requestoptions
+// [README]: https://pkg.go.dev/github.com/DefinitelyATestOrg/sam-go/v2#readme-requestoptions
 type RequestOption = requestconfig.RequestOption
 
 // WithBaseURL returns a RequestOption that sets the BaseURL for the client.
@@ -169,17 +169,25 @@ func WithQueryDel(key string) RequestOption {
 // [sjson format]: https://github.com/tidwall/sjson
 func WithJSONSet(key string, value interface{}) RequestOption {
 	return requestconfig.RequestOptionFunc(func(r *requestconfig.RequestConfig) (err error) {
-		if buffer, ok := r.Body.(*bytes.Buffer); ok {
-			b := buffer.Bytes()
+		var b []byte
+
+		if r.Body == nil {
+			b, err = sjson.SetBytes(nil, key, value)
+			if err != nil {
+				return err
+			}
+		} else if buffer, ok := r.Body.(*bytes.Buffer); ok {
+			b = buffer.Bytes()
 			b, err = sjson.SetBytes(b, key, value)
 			if err != nil {
 				return err
 			}
-			r.Body = bytes.NewBuffer(b)
-			return nil
+		} else {
+			return fmt.Errorf("cannot use WithJSONSet on a body that is not serialized as *bytes.Buffer")
 		}
 
-		return fmt.Errorf("cannot use WithJSONSet on a body that is not serialized as *bytes.Buffer")
+		r.Body = bytes.NewBuffer(b)
+		return nil
 	})
 }
 
@@ -254,7 +262,7 @@ func WithRequestTimeout(dur time.Duration) RequestOption {
 // environment to be the "production" environment. An environment specifies which base URL
 // to use by default.
 func WithEnvironmentProduction() RequestOption {
-	return WithBaseURL("/api/v3/")
+	return requestconfig.WithDefaultBaseURL("/api/v3/")
 }
 
 // WithAPIKey returns a RequestOption that sets the client setting "api_key".

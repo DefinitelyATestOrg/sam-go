@@ -10,11 +10,11 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/DefinitelyATestOrg/sam-go/internal/apijson"
-	"github.com/DefinitelyATestOrg/sam-go/internal/apiquery"
-	"github.com/DefinitelyATestOrg/sam-go/internal/param"
-	"github.com/DefinitelyATestOrg/sam-go/internal/requestconfig"
-	"github.com/DefinitelyATestOrg/sam-go/option"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apijson"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apiquery"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal/param"
+	"github.com/DefinitelyATestOrg/sam-go/v2/internal/requestconfig"
+	"github.com/DefinitelyATestOrg/sam-go/v2/option"
 )
 
 // ModelService contains methods and other services that help with interacting with
