@@ -31,7 +31,7 @@ go get -u 'github.com/DefinitelyATestOrg/sam-go/v2@v2.0.0-beta.1'
 
 ## Requirements
 
-This library requires Go 1.18+.
+This library requires Go 1.22+.
 
 ## Usage
 
