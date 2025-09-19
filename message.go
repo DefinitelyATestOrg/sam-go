@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"reflect"
+	"slices"
 
 	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apijson"
 	"github.com/DefinitelyATestOrg/sam-go/v2/internal/param"
@@ -55,7 +56,7 @@ func (r *MessageService) New(ctx context.Context, params MessageNewParams, opts 
 	if params.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", params.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/messages"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
 	return
@@ -78,7 +79,7 @@ func (r *MessageService) CountTokens(ctx context.Context, params MessageCountTok
 	if params.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", params.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/messages/count_tokens"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
 	return
@@ -101,7 +102,7 @@ func (r *MessageService) CountTokensBeta(ctx context.Context, params MessageCoun
 	if params.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", params.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/messages/count_tokens?beta=true"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
 	return

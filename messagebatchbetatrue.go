@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apijson"
@@ -50,7 +51,7 @@ func (r *MessageBatchBetaTrueService) Get(ctx context.Context, messageBatchID st
 	if query.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", query.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if messageBatchID == "" {
 		err = errors.New("missing required message_batch_id parameter")
 		return
@@ -77,7 +78,7 @@ func (r *MessageBatchBetaTrueService) Delete(ctx context.Context, messageBatchID
 	if body.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", body.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if messageBatchID == "" {
 		err = errors.New("missing required message_batch_id parameter")
 		return

@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/url"
 	"reflect"
+	"slices"
 	"time"
 
 	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apijson"
@@ -59,7 +60,7 @@ func (r *MessageBatchService) New(ctx context.Context, params MessageBatchNewPar
 	if params.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", params.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/messages/batches"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
 	return
@@ -81,7 +82,7 @@ func (r *MessageBatchService) Get(ctx context.Context, messageBatchID string, qu
 	if query.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", query.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if messageBatchID == "" {
 		err = errors.New("missing required message_batch_id parameter")
 		return
@@ -106,7 +107,7 @@ func (r *MessageBatchService) List(ctx context.Context, params MessageBatchListP
 	if params.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", params.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/messages/batches"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, params, &res, opts...)
 	return
@@ -129,7 +130,7 @@ func (r *MessageBatchService) Delete(ctx context.Context, messageBatchID string,
 	if body.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", body.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if messageBatchID == "" {
 		err = errors.New("missing required message_batch_id parameter")
 		return
@@ -161,7 +162,7 @@ func (r *MessageBatchService) Cancel(ctx context.Context, messageBatchID string,
 	if body.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", body.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if messageBatchID == "" {
 		err = errors.New("missing required message_batch_id parameter")
 		return
@@ -193,7 +194,7 @@ func (r *MessageBatchService) CancelBeta(ctx context.Context, messageBatchID str
 	if body.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", body.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if messageBatchID == "" {
 		err = errors.New("missing required message_batch_id parameter")
 		return
@@ -225,7 +226,7 @@ func (r *MessageBatchService) ResultsStreaming(ctx context.Context, messageBatch
 	if query.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", query.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "application/x-jsonl")}, opts...)
 	if messageBatchID == "" {
 		err = errors.New("missing required message_batch_id parameter")
@@ -258,7 +259,7 @@ func (r *MessageBatchService) ResultsBetaStreaming(ctx context.Context, messageB
 	if query.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", query.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "application/x-jsonl")}, opts...)
 	if messageBatchID == "" {
 		err = errors.New("missing required message_batch_id parameter")

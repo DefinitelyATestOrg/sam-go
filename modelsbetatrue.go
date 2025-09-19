@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apijson"
@@ -46,7 +47,7 @@ func (r *ModelsBetaTrueService) List(ctx context.Context, params ModelsBetaTrueL
 	if params.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", params.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/models?beta=true"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, params, &res, opts...)
 	return

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"slices"
 	"time"
 
 	"github.com/DefinitelyATestOrg/sam-go/v2/internal/apijson"
@@ -47,7 +48,7 @@ func (r *ModelService) Get(ctx context.Context, modelID string, query ModelGetPa
 	if query.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", query.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if modelID == "" {
 		err = errors.New("missing required model_id parameter")
 		return
@@ -68,7 +69,7 @@ func (r *ModelService) List(ctx context.Context, params ModelListParams, opts ..
 	if params.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", params.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	path := "v1/models"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, params, &res, opts...)
 	return
@@ -85,7 +86,7 @@ func (r *ModelService) GetBeta(ctx context.Context, modelID string, query ModelG
 	if query.XAPIKey.Present {
 		opts = append(opts, option.WithHeader("x-api-key", fmt.Sprintf("%s", query.XAPIKey)))
 	}
-	opts = append(r.Options[:], opts...)
+	opts = slices.Concat(r.Options, opts)
 	if modelID == "" {
 		err = errors.New("missing required model_id parameter")
 		return
